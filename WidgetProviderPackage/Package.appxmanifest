@@ -1,0 +1,107 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<Package
+  xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10"
+  xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
+  xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities"
+  xmlns:uap3="http://schemas.microsoft.com/appx/manifest/uap/windows10/3"
+  xmlns:com="http://schemas.microsoft.com/appx/manifest/com/windows10"
+  xmlns:desktop="http://schemas.microsoft.com/appx/manifest/desktop/windows10"
+  IgnorableNamespaces="uap rescap">
+
+	<Identity
+	  Name="027c24d0-387e-4f75-b67b-e7c587ed587a"
+	  Publisher="CN=Administrator"
+	  Version="1.0.0.0" />
+
+	<Properties>
+		<DisplayName>Rag's Widgets</DisplayName>
+		<PublisherDisplayName>Shin Rag</PublisherDisplayName>
+		<Logo>Images\StoreLogo.png</Logo>
+	</Properties>
+
+	<Dependencies>
+		<TargetDeviceFamily Name="Windows.Universal" MinVersion="10.0.0.0" MaxVersionTested="10.0.0.0" />
+		<TargetDeviceFamily Name="Windows.Desktop" MinVersion="10.0.14393.0" MaxVersionTested="10.0.14393.0" />
+	</Dependencies>
+
+	<Resources>
+		<Resource Language="x-generate"/>
+	</Resources>
+
+	<Applications>
+		<Application Id="App"
+		  Executable="$targetnametoken$.exe"
+		  EntryPoint="$targetentrypoint$">
+			<uap:VisualElements
+			  DisplayName="Rag's Widgets"
+			  Description="Shin Rag's Widgets"
+			  BackgroundColor="transparent"
+			  Square150x150Logo="Images\Square150x150Logo.png"
+			  Square44x44Logo="Images\Square44x44Logo.png">
+				<uap:DefaultTile Wide310x150Logo="Images\Wide310x150Logo.png" />
+				<uap:SplashScreen Image="Images\SplashScreen.png" />
+			</uap:VisualElements>
+			<Extensions>
+				<com:Extension Category="windows.comServer">
+					<com:ComServer>
+						<com:ExeServer Executable="$targetnametoken$.exe" DisplayName="Rag's WidgetProvider">
+							<com:Class Id="88C44EA9-032B-4443-A7ED-21182BAD7079" DisplayName="Rag's WidgetProvider" />
+						</com:ExeServer>
+					</com:ComServer>
+				</com:Extension>
+				<uap3:Extension Category="windows.appExtension">
+					<uap3:AppExtension Name="com.microsoft.windows.widgets" DisplayName="Rag's Widgets" Id="RagWidgets" PublicFolder="Public">
+						<uap3:Properties>
+							<WidgetProvider>
+								<ProviderIcons>
+									<Icon Path="Images\StoreLogo.png" />
+								</ProviderIcons>
+								<Activation>
+									<!-- Apps exports COM interface which implements IWidgetProvider -->
+									<CreateInstance ClassId="88C44EA9-032B-4443-A7ED-21182BAD7079" />
+								</Activation>
+
+								<TrustedPackageFamilyNames>
+									<TrustedPackageFamilyName>Microsoft.MicrosoftEdge.Stable_8wekyb3d8bbwe</TrustedPackageFamilyName>
+								</TrustedPackageFamilyNames>
+
+								<Definitions>
+									<Definition Id="Network"
+										DisplayName="Network Widget"
+										Description="Show network usage"
+										AllowMultiple="false">
+										<Capabilities>
+											<Capability>
+												<Size Name="small" />
+											</Capability>
+										</Capabilities>
+										<ThemeResources>
+											<Icons>
+												<Icon Path="ProviderAssets\NetworkWidgetIcon.png" />
+											</Icons>
+											<Screenshots>
+												<Screenshot Path="ProviderAssets\NetworkWidgetScreenshot.png" DisplayAltText="Network Widget Screenshot" />
+											</Screenshots>
+											<!-- DarkMode and LightMode are optional -->
+											<DarkMode />
+											<LightMode />
+										</ThemeResources>
+									</Definition>
+								</Definitions>
+							</WidgetProvider>
+						</uap3:Properties>
+					</uap3:AppExtension>
+				</uap3:Extension>
+				<desktop:Extension Category="windows.startupTask" Executable="$targetnametoken$.exe" EntryPoint="Windows.FullTrustApplication">
+					<desktop:StartupTask TaskId="RagWidgetProviderStartup" Enabled="true" DisplayName="Rag's Widget Provider"/>
+				</desktop:Extension>
+			</Extensions>
+		</Application>
+	</Applications>
+
+	<Capabilities>
+		<Capability Name="internetClient" />
+		<rescap:Capability Name="runFullTrust" />
+	</Capabilities>
+</Package>
