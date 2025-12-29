@@ -70,6 +70,35 @@
           ]
         }
       ]
+    },
+    {
+      "type": "TextBlock",
+      "text": "Default Interface",
+      "wrap": true,
+      "isSubtle": true,
+      "$when": "${$host.widgetSize==\"medium\"}"
+    },
+    {
+      "type": "TextBlock",
+      "text": "${interfaceName}",
+      "wrap": true,
+      "height": "stretch",
+      "weight": "Default",
+      "$when": "${$host.widgetSize==\"medium\"}"
+    },
+    {
+      "type": "ActionSet",
+      "actions": [
+        {
+          "type": "Action.Execute",
+          "title": "Redetect",
+          "verb": "redetect",
+          "isEnabled": "${isRedetectEnabled}",
+          "tooltip": "Redetect default interface"
+        }
+      ],
+      "horizontalAlignment": "Right",
+      "$when": "${$host.widgetSize==\"medium\"}"
     }
   ]
 }

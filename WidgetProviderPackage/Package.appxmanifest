@@ -6,13 +6,12 @@
   xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities"
   xmlns:uap3="http://schemas.microsoft.com/appx/manifest/uap/windows10/3"
   xmlns:com="http://schemas.microsoft.com/appx/manifest/com/windows10"
-  xmlns:desktop="http://schemas.microsoft.com/appx/manifest/desktop/windows10"
   IgnorableNamespaces="uap rescap">
 
 	<Identity
 	  Name="027c24d0-387e-4f75-b67b-e7c587ed587a"
 	  Publisher="CN=Administrator"
-	  Version="1.0.0.0" />
+	  Version="1.0.1.0" />
 
 	<Properties>
 		<DisplayName>Rag's Widgets</DisplayName>
@@ -45,7 +44,7 @@
 			<Extensions>
 				<com:Extension Category="windows.comServer">
 					<com:ComServer>
-						<com:ExeServer Executable="$targetnametoken$.exe" DisplayName="Rag's WidgetProvider">
+						<com:ExeServer Executable="WidgetProvider\WidgetProvider.exe" DisplayName="Rag's WidgetProvider">
 							<com:Class Id="88C44EA9-032B-4443-A7ED-21182BAD7079" DisplayName="Rag's WidgetProvider" />
 						</com:ExeServer>
 					</com:ComServer>
@@ -58,7 +57,6 @@
 									<Icon Path="Images\StoreLogo.png" />
 								</ProviderIcons>
 								<Activation>
-									<!-- Apps exports COM interface which implements IWidgetProvider -->
 									<CreateInstance ClassId="88C44EA9-032B-4443-A7ED-21182BAD7079" />
 								</Activation>
 
@@ -67,23 +65,25 @@
 								</TrustedPackageFamilyNames>
 
 								<Definitions>
-									<Definition Id="Network"
-										DisplayName="Network Widget"
-										Description="Show network usage"
+									<Definition Id="NetworkUsageMonitor"
+										DisplayName="Network Usage Monitor"
+										Description="Monitor network usage"
 										AllowMultiple="false">
 										<Capabilities>
 											<Capability>
 												<Size Name="small" />
 											</Capability>
+											<Capability>
+												<Size Name="medium" />
+											</Capability>
 										</Capabilities>
 										<ThemeResources>
 											<Icons>
-												<Icon Path="ProviderAssets\NetworkWidgetIcon.png" />
+												<Icon Path="ProviderAssets\NetworkUsageMonitorWidgetIcon.png" />
 											</Icons>
 											<Screenshots>
-												<Screenshot Path="ProviderAssets\NetworkWidgetScreenshot.png" DisplayAltText="Network Widget Screenshot" />
+												<Screenshot Path="ProviderAssets\NetworkUsageMonitorWidgetScreenshot.png" DisplayAltText="Network Usage Monitor Widget Screenshot" />
 											</Screenshots>
-											<!-- DarkMode and LightMode are optional -->
 											<DarkMode />
 											<LightMode />
 										</ThemeResources>
@@ -93,9 +93,6 @@
 						</uap3:Properties>
 					</uap3:AppExtension>
 				</uap3:Extension>
-				<desktop:Extension Category="windows.startupTask" Executable="$targetnametoken$.exe" EntryPoint="Windows.FullTrustApplication">
-					<desktop:StartupTask TaskId="RagWidgetProviderStartup" Enabled="true" DisplayName="Rag's Widget Provider"/>
-				</desktop:Extension>
 			</Extensions>
 		</Application>
 	</Applications>

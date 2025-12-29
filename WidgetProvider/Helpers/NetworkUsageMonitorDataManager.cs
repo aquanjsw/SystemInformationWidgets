@@ -1,19 +1,23 @@
-﻿using System.Diagnostics;
+﻿using Microsoft.Extensions.Logging;
+using System.Diagnostics;
 using System.Management;
 using System.Net;
 using System.Net.NetworkInformation;
 
 namespace WidgetProvider.Helpers;
 
-internal partial class NetworkDataManager : IDisposable
+internal partial class NetworkUsageMonitorDataManager : IDisposable
 {
   private PerformanceCounter? sentSpeedCounter;
   private PerformanceCounter? recvSpeedCounter;
-  private string? currentIf;
-  public NetworkDataManager()
+  private string currentIf = "";
+  private readonly ILogger logger;
+  public NetworkUsageMonitorDataManager()
   {
+    logger = Providers.GetLoggerFactory().CreateLogger<NetworkUsageMonitorDataManager>();
     UpdateCounters();
   }
+  public string Interface => currentIf;
   public string GetSentSpeed()
   {
     if (sentSpeedCounter == null)
@@ -35,7 +39,8 @@ internal partial class NetworkDataManager : IDisposable
   public void UpdateCounters()
   {
     var defaultIf = GetDefaultInterface();
-    if (defaultIf == null)
+    logger.LogInformation("Default network interface detected: {interface}", defaultIf);
+    if (defaultIf == "")
     {
       sentSpeedCounter?.Dispose();
       recvSpeedCounter?.Dispose();
@@ -44,6 +49,7 @@ internal partial class NetworkDataManager : IDisposable
     }
     else if (currentIf != defaultIf)
     {
+      logger.LogInformation("Updating performance counters to interface: {interface}", defaultIf);
       sentSpeedCounter = new PerformanceCounter("Network Interface", "Bytes Sent/sec", defaultIf);
       recvSpeedCounter = new PerformanceCounter("Network Interface", "Bytes Received/sec", defaultIf);
       currentIf = defaultIf;
@@ -77,7 +83,7 @@ internal partial class NetworkDataManager : IDisposable
   /// <return>
   /// <c>null</c> if no outbound interface
   /// </return>
-  private static string? GetDefaultInterface()
+  private static string GetDefaultInterface()
   {
     var metrics = new ManagementObjectSearcher(
       "ROOT\\CIMV2",
@@ -111,7 +117,7 @@ internal partial class NetworkDataManager : IDisposable
     })
     .OrderBy(x => x.Metric)
     .Select(x => x.Interface.Description)
-    .FirstOrDefault();
+    .FirstOrDefault("");
   }
 }
 

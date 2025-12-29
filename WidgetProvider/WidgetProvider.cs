@@ -17,7 +17,7 @@ internal partial class WidgetProvider : IWidgetProvider
     logger = Helpers.Providers.GetLoggerFactory().CreateLogger<WidgetProvider>();
     logger.LogInformation("Initializing WidgetProvider");
 
-    widgetCreators.Add("Network", new WidgetInterfaceFactory<NetworkWidget>());
+    widgetCreators.Add("NetworkUsageMonitor", new WidgetInterfaceFactory<NetworkUsageMonitorWidget>());
 
     /// Recover widgets
     logger.LogInformation("Recovering widgets");
@@ -69,7 +69,8 @@ internal partial class WidgetProvider : IWidgetProvider
   }
   public void OnActionInvoked(WidgetActionInvokedArgs args)
   {
-    // No action handling for now
+    logger.LogInformation("Action invoked on widget: {widgetId} - {widgetDefinitionId}, action: {verb}", args.WidgetContext.Id, args.WidgetContext.DefinitionId, args.Verb);
+    runningWidgets[args.WidgetContext.Id].OnActionInvoked(args);
   }
   public void OnWidgetContextChanged(WidgetContextChangedArgs args)
   {

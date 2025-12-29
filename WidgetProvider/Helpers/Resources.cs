@@ -8,8 +8,8 @@ internal class Resources
   public static ILogger? logger;
   private static ResourceLoader? resourceLoader;
   private static readonly string[] resourceIdentifiers = [
-    "NetworkWidgetTemplate.Send",
-    "NetworkWidgetTemplate.Recv"
+    "NetworkUsageMonitorWidgetTemplate.Send",
+    "NetworkUsageMonitorWidgetTemplate.Recv"
   ];
   private static ILogger GetLogger()
   {

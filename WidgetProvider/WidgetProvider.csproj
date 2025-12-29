@@ -16,7 +16,7 @@
     <Content Include="appsettings_Development.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Widgets\Templates\NetworkWidgetTemplate.json">
+    <Content Include="Widgets\Templates\NetworkUsageMonitorWidgetTemplate.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

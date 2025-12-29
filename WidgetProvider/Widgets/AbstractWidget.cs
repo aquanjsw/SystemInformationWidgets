@@ -37,4 +37,5 @@ internal abstract class AbstractWidget : IWidgetInterface
   {
     Deactivate();
   }
+  public abstract void OnActionInvoked(WidgetActionInvokedArgs args);
 }

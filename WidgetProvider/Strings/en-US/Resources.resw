@@ -117,10 +117,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="NetworkWidgetTemplate.Recv" xml:space="preserve">
+  <data name="NetworkUsageMonitorWidgetTemplate.Recv" xml:space="preserve">
     <value>Receive</value>
   </data>
-  <data name="NetworkWidgetTemplate.Send" xml:space="preserve">
+  <data name="NetworkUsageMonitorWidgetTemplate.Send" xml:space="preserve">
     <value>Send</value>
   </data>
 </root>

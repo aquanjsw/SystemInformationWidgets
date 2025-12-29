@@ -12,5 +12,6 @@ namespace WidgetProvider.Widgets
     void Activate();
     void Deactivate();
     void DeleteWidget();
+    void OnActionInvoked(WidgetActionInvokedArgs args);
   }
 }
