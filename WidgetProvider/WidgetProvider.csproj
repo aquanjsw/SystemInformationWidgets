@@ -1,22 +1,24 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <OutputType>WinExe</OutputType>
+    <OutputType>Exe</OutputType>
     <TargetFramework>net10.0-windows10.0.26100.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <RuntimeIdentifiers>win-x64</RuntimeIdentifiers>
+    <SupportedOSPlatformVersion>10.0.19041.0</SupportedOSPlatformVersion>
   </PropertyGroup>
 
   <ItemGroup>
     <None Remove="appsettings_Development.json" />
+    <None Remove="Widgets\Templates\NetworkUsageWidgetTemplate.json" />
   </ItemGroup>
 
   <ItemGroup>
     <Content Include="appsettings_Development.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Widgets\Templates\NetworkUsageMonitorWidgetTemplate.json">
+    <Content Include="Widgets\Templates\NetworkUsageWidgetTemplate.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
@@ -46,5 +48,13 @@
   </ItemGroup>
 
   <ProjectExtensions><VisualStudio><UserProperties appsettings_3development_1json__JsonSchema="appsettings" /></VisualStudio></ProjectExtensions>
+
+  <ItemGroup>
+    <EditorConfigFiles Remove="D:\source\WindowsWidgets\WidgetProvider\.editorconfig" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="D:\source\WindowsWidgets\WidgetProvider\.editorconfig" />
+  </ItemGroup>
 
 </Project>

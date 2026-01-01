@@ -11,10 +11,10 @@
 	<Identity
 	  Name="027c24d0-387e-4f75-b67b-e7c587ed587a"
 	  Publisher="CN=Administrator"
-	  Version="1.0.1.0" />
+	  Version="1.0.0.0" />
 
 	<Properties>
-		<DisplayName>Rag's Widgets</DisplayName>
+		<DisplayName>System Widgets</DisplayName>
 		<PublisherDisplayName>Shin Rag</PublisherDisplayName>
 		<Logo>Images\StoreLogo.png</Logo>
 	</Properties>
@@ -33,24 +33,24 @@
 		  Executable="$targetnametoken$.exe"
 		  EntryPoint="$targetentrypoint$">
 			<uap:VisualElements
-			  DisplayName="Rag's Widgets"
-			  Description="Shin Rag's Widgets"
+			  DisplayName="System Widgets"
+			  Description="Widgets for system information"
 			  BackgroundColor="transparent"
 			  Square150x150Logo="Images\Square150x150Logo.png"
 			  Square44x44Logo="Images\Square44x44Logo.png">
-				<uap:DefaultTile Wide310x150Logo="Images\Wide310x150Logo.png" />
+				<uap:DefaultTile Wide310x150Logo="Images\Wide310x150Logo.png"  Square71x71Logo="Images\SmallTile.png" Square310x310Logo="Images\LargeTile.png"/>
 				<uap:SplashScreen Image="Images\SplashScreen.png" />
 			</uap:VisualElements>
 			<Extensions>
 				<com:Extension Category="windows.comServer">
 					<com:ComServer>
-						<com:ExeServer Executable="WidgetProvider\WidgetProvider.exe" DisplayName="Rag's WidgetProvider">
-							<com:Class Id="88C44EA9-032B-4443-A7ED-21182BAD7079" DisplayName="Rag's WidgetProvider" />
+						<com:ExeServer Executable="WidgetProvider\WidgetProvider.exe" DisplayName="System Widget Provider">
+							<com:Class Id="88C44EA9-032B-4443-A7ED-21182BAD7079" DisplayName="System Widget Provider" />
 						</com:ExeServer>
 					</com:ComServer>
 				</com:Extension>
 				<uap3:Extension Category="windows.appExtension">
-					<uap3:AppExtension Name="com.microsoft.windows.widgets" DisplayName="Rag's Widgets" Id="RagWidgets" PublicFolder="Public">
+					<uap3:AppExtension Name="com.microsoft.windows.widgets" DisplayName="System Widgets" Id="SystemWidgets" PublicFolder="Public">
 						<uap3:Properties>
 							<WidgetProvider>
 								<ProviderIcons>
@@ -65,8 +65,8 @@
 								</TrustedPackageFamilyNames>
 
 								<Definitions>
-									<Definition Id="NetworkUsageMonitor"
-										DisplayName="Network Usage Monitor"
+									<Definition Id="NetworkUsage"
+										DisplayName="Network Usage"
 										Description="Monitor network usage"
 										AllowMultiple="false">
 										<Capabilities>
@@ -79,10 +79,10 @@
 										</Capabilities>
 										<ThemeResources>
 											<Icons>
-												<Icon Path="ProviderAssets\NetworkUsageMonitorWidgetIcon.png" />
+												<Icon Path="ProviderAssets\NetworkUsageWidgetIcon.png" />
 											</Icons>
 											<Screenshots>
-												<Screenshot Path="ProviderAssets\NetworkUsageMonitorWidgetScreenshot.png" DisplayAltText="Network Usage Monitor Widget Screenshot" />
+												<Screenshot Path="ProviderAssets\NetworkUsageWidgetScreenshot.png" DisplayAltText="Network Usage Widget Screenshot" />
 											</Screenshots>
 											<DarkMode />
 											<LightMode />

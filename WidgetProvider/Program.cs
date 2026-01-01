@@ -20,7 +20,6 @@ static extern int CoRegisterClassObject(
 
 [DllImport("ole32.dll")] static extern int CoRevokeClassObject(uint dwRegister);
 
-logger.LogInformation("Registering Widget Provider");
 uint cookie;
 
 Guid CLSID_Factory = Guid.Parse("88C44EA9-032B-4443-A7ED-21182BAD7079");
@@ -29,8 +28,6 @@ if (errno != 0)
 {
   throw new Exception("Failed to register class object. Error code: " + errno);
 }
-logger.LogInformation("Registered successfully. Press ENTER to exit.");
-Console.ReadLine();
 
 if (GetConsoleWindow() != IntPtr.Zero)
 {

@@ -6,7 +6,7 @@ namespace WidgetProvider.Helpers;
 
 internal class AutoStartup
 {
-  private const string AppName = "RagsWidgetProvider";
+  private const string AppName = "SystemWidgetProvider";
   private static readonly Lazy<ILogger> lazyLogger = new(() => Providers.GetLoggerFactory().CreateLogger<AutoStartup>());
   public static void Setup() {
     var exePath = Assembly.GetExecutingAssembly().Location.Replace(".dll", ".exe");

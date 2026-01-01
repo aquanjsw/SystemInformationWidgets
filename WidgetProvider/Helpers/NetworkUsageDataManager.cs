@@ -6,15 +6,15 @@ using System.Net.NetworkInformation;
 
 namespace WidgetProvider.Helpers;
 
-internal partial class NetworkUsageMonitorDataManager : IDisposable
+internal partial class NetworkUsageDataManager : IDisposable
 {
   private PerformanceCounter? sentSpeedCounter;
   private PerformanceCounter? recvSpeedCounter;
   private string currentIf = "";
   private readonly ILogger logger;
-  public NetworkUsageMonitorDataManager()
+  public NetworkUsageDataManager()
   {
-    logger = Providers.GetLoggerFactory().CreateLogger<NetworkUsageMonitorDataManager>();
+    logger = Providers.GetLoggerFactory().CreateLogger<NetworkUsageDataManager>();
     UpdateCounters();
   }
   public string Interface => currentIf;
@@ -39,20 +39,20 @@ internal partial class NetworkUsageMonitorDataManager : IDisposable
   public void UpdateCounters()
   {
     var defaultIf = GetDefaultInterface();
-    logger.LogInformation("Default network interface detected: {interface}", defaultIf);
     if (defaultIf == "")
     {
       sentSpeedCounter?.Dispose();
       recvSpeedCounter?.Dispose();
       sentSpeedCounter = null;
       recvSpeedCounter = null;
+      logger.LogInformation("No outbound network interface detected.");
     }
     else if (currentIf != defaultIf)
     {
-      logger.LogInformation("Updating performance counters to interface: {interface}", defaultIf);
       sentSpeedCounter = new PerformanceCounter("Network Interface", "Bytes Sent/sec", defaultIf);
       recvSpeedCounter = new PerformanceCounter("Network Interface", "Bytes Received/sec", defaultIf);
       currentIf = defaultIf;
+      logger.LogInformation("Network interface changed to: {interface}", currentIf);
     }
   }
   public void Dispose()

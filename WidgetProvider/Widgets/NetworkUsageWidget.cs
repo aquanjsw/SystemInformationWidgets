@@ -4,16 +4,15 @@ using System.Text.Json;
 
 namespace WidgetProvider.Widgets;
 
-internal partial class NetworkUsageMonitorWidget : AbstractWidget, IDisposable
+internal partial class NetworkUsageWidget : AbstractWidget, IDisposable
 {
-  private readonly ILogger logger;
-  private readonly Helpers.NetworkUsageMonitorDataManager dataManager = new();
-  protected override string RelativeTemplatePath => @"Widgets\Templates\NetworkUsageMonitorWidgetTemplate.json";
+  private readonly ILogger logger = Helpers.Providers.GetLoggerFactory().CreateLogger<NetworkUsageWidget>();
+  private readonly Helpers.NetworkUsageDataManager dataManager = new();
+  protected override string RelativeTemplatePath => @"Widgets\Templates\NetworkUsageWidgetTemplate.json";
   private readonly System.Timers.Timer updateTimer = new(1500);
   private bool isRedetectActionEnabled = true;
-  public NetworkUsageMonitorWidget() : base()
+  public NetworkUsageWidget() : base()
   {
-    logger = Helpers.Providers.GetLoggerFactory().CreateLogger<NetworkUsageMonitorWidget>();
     updateTimer.Elapsed += (_, _) => UpdateWidget();
   }
   public override string GetData() => JsonSerializer.Serialize(new
@@ -22,7 +21,7 @@ internal partial class NetworkUsageMonitorWidget : AbstractWidget, IDisposable
     recvSpeed = dataManager.GetRecvSpeed(),
     isRedetectEnabled = isRedetectActionEnabled,
     interfaceName = dataManager.Interface
-});
+  });
   public override void Activate()
   {
     updateTimer.Start();
@@ -36,19 +35,21 @@ internal partial class NetworkUsageMonitorWidget : AbstractWidget, IDisposable
   public override void DeleteWidget()
   {
     base.DeleteWidget();
-    updateTimer.Stop();
   }
   public override void OnActionInvoked(WidgetActionInvokedArgs args)
   {
     if (args.Verb == "redetect")
     {
-      logger.LogInformation("Redetect action invoked.");
       updateTimer.Stop();
       isRedetectActionEnabled = false;
+
       UpdateWidget();
       dataManager.UpdateCounters();
+
       isRedetectActionEnabled = true;
       updateTimer.Start();
+
+      logger.LogInformation("Redetect action invoked.");
     }
   }
   public void Dispose()

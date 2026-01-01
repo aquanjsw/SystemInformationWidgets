@@ -15,12 +15,10 @@ internal partial class WidgetProvider : IWidgetProvider
   public WidgetProvider()
   {
     logger = Helpers.Providers.GetLoggerFactory().CreateLogger<WidgetProvider>();
-    logger.LogInformation("Initializing WidgetProvider");
 
-    widgetCreators.Add("NetworkUsageMonitor", new WidgetInterfaceFactory<NetworkUsageMonitorWidget>());
+    widgetCreators.Add("NetworkUsage", new WidgetInterfaceFactory<NetworkUsageWidget>());
 
     /// Recover widgets
-    logger.LogInformation("Recovering widgets");
     foreach (var widgetInfo in WidgetManager.GetDefault().GetWidgetInfos())
     {
       if (!runningWidgets.ContainsKey(widgetInfo.WidgetContext.Id))
@@ -31,7 +29,6 @@ internal partial class WidgetProvider : IWidgetProvider
   }
   public void CreateWidget(WidgetContext widgetContext)
   {
-    logger.LogInformation("Creating widget: {widgetDefinitionId} - {widgetId}", widgetContext.DefinitionId, widgetContext.Id);
     if (!widgetCreators.TryGetValue(widgetContext.DefinitionId, out var widgetCreator))
     {
       logger.LogError("Unknown widget: {widgetDefinitionId}", widgetContext.DefinitionId);
@@ -43,34 +40,33 @@ internal partial class WidgetProvider : IWidgetProvider
       return;
     }
     var widget = widgetCreator.CreateWidget(widgetContext);
+    logger.LogInformation("Widget created: {widgetDefinitionId} - {widgetId}", widgetContext.DefinitionId, widgetContext.Id);
     runningWidgets.Add(widgetContext.Id, widget);
-    /// TODO: Check if there is a need to manually active the widget here
-    ///       Cuz' the <c>Active</c> method should be called by the system
-    ///       after the widget is created.
   }
   public void Activate(WidgetContext widgetContext)
   {
-    logger.LogDebug("Activating widget: {widgetDefinitionId} - {widgetId}", widgetContext.DefinitionId, widgetContext.Id);
     runningWidgets[widgetContext.Id].Activate();
+    logger.LogDebug("Widget activated: {definitionId} - {id}", widgetContext.DefinitionId, widgetContext.Id);
   }
   public void Deactivate(string widgetId)
   {
-    logger.LogDebug("Deactivating widget: {widgetId}", widgetId);
     runningWidgets[widgetId].Deactivate();
+    logger.LogDebug("Widget deactivated: {widgetId}", widgetId);
   }
   public void DeleteWidget(string widgetId, string customState)
   {
-    logger.LogInformation("Deleting widget: {widgetId}", widgetId);
     runningWidgets[widgetId].DeleteWidget();
+    logger.LogInformation("Widget deleted: {widgetId}", widgetId);
     if (runningWidgets.Count == 0)
     {
       emptyWidgetEvent.Set();
+      logger.LogInformation("No more running widgets. Signaling empty widget event.");
     }
   }
   public void OnActionInvoked(WidgetActionInvokedArgs args)
   {
-    logger.LogInformation("Action invoked on widget: {widgetId} - {widgetDefinitionId}, action: {verb}", args.WidgetContext.Id, args.WidgetContext.DefinitionId, args.Verb);
     runningWidgets[args.WidgetContext.Id].OnActionInvoked(args);
+    logger.LogInformation("Action invoked on widget: {widgetId} - {widgetDefinitionId}, action: {verb}", args.WidgetContext.Id, args.WidgetContext.DefinitionId, args.Verb);
   }
   public void OnWidgetContextChanged(WidgetContextChangedArgs args)
   {
