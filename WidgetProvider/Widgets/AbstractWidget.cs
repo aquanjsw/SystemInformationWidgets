@@ -1,9 +1,11 @@
-﻿using Microsoft.Windows.Widgets.Providers;
+﻿using Microsoft.Extensions.Logging;
+using Microsoft.Windows.Widgets.Providers;
 
 namespace WidgetProvider.Widgets;
 
 internal abstract class AbstractWidget : IWidgetInterface
 {
+  protected abstract ILogger Logger { get; }
   public string Id { get; set; } = "";
   public string DefinitionId { get; set; } = "";
   protected readonly string template;
@@ -12,13 +14,13 @@ internal abstract class AbstractWidget : IWidgetInterface
   {
     var templatePath = Path.Combine(Windows.ApplicationModel.Package.Current.EffectivePath, RelativeTemplatePath);
     template = File.ReadAllText(templatePath);
-    // Do not need for localization support now
-    //template = Helpers.Resources.ReplaceIdentifiers(template);
+    template = Helpers.Resources.Localize(template);
   }
   public virtual string GetTemplate() => template;
   public abstract string GetData();
   public virtual void CreateWidget(WidgetContext widgetContext)
   {
+    Logger.LogInformation("Creating widget: {definitionId} - {id}", widgetContext.DefinitionId, widgetContext.Id);
     Id = widgetContext.Id;
     DefinitionId = widgetContext.DefinitionId;
   }

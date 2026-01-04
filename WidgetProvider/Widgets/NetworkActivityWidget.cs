@@ -4,14 +4,14 @@ using System.Text.Json;
 
 namespace WidgetProvider.Widgets;
 
-internal partial class NetworkUsageWidget : AbstractWidget, IDisposable
+internal partial class NetworkActivityWidget : AbstractWidget, IDisposable
 {
-  private readonly ILogger logger = Helpers.Providers.GetLoggerFactory().CreateLogger<NetworkUsageWidget>();
-  private readonly Helpers.NetworkUsageDataManager dataManager = new();
-  protected override string RelativeTemplatePath => @"Widgets\Templates\NetworkUsageWidgetTemplate.json";
+  protected override ILogger Logger => Helpers.Providers.GetLoggerFactory().CreateLogger<NetworkActivityWidget>();
+  private readonly Helpers.NetworkActivityDataManager dataManager = new();
+  protected override string RelativeTemplatePath => @"Widgets\Templates\NetworkActivityWidgetTemplate.json";
   private readonly System.Timers.Timer updateTimer = new(1500);
   private bool isRedetectActionEnabled = true;
-  public NetworkUsageWidget() : base()
+  public NetworkActivityWidget() : base()
   {
     updateTimer.Elapsed += (_, _) => UpdateWidget();
   }
@@ -19,18 +19,18 @@ internal partial class NetworkUsageWidget : AbstractWidget, IDisposable
   {
     sentSpeed = dataManager.GetSentSpeed(),
     recvSpeed = dataManager.GetRecvSpeed(),
-    isRedetectEnabled = isRedetectActionEnabled,
+    isRedetectActionEnabled,
     interfaceName = dataManager.Interface
   });
   public override void Activate()
   {
     updateTimer.Start();
-    logger.LogTrace("timer for dataManager started.");
+    Logger.LogTrace("timer for dataManager started.");
   }
   public override void Deactivate()
   {
     updateTimer.Stop();
-    logger.LogTrace("timer for dataManager stopped.");
+    Logger.LogTrace("timer for dataManager stopped.");
   }
   public override void DeleteWidget()
   {
@@ -49,7 +49,7 @@ internal partial class NetworkUsageWidget : AbstractWidget, IDisposable
       isRedetectActionEnabled = true;
       updateTimer.Start();
 
-      logger.LogInformation("Redetect action invoked.");
+      Logger.LogInformation("Redetect action invoked.");
     }
   }
   public void Dispose()

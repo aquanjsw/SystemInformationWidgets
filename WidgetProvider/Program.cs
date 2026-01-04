@@ -3,8 +3,6 @@ using Microsoft.Extensions.Logging;
 using System.Runtime.InteropServices;
 using WidgetProvider.Helpers;
 
-AutoStartup.Setup();
-
 var logger = Providers.GetLoggerFactory().CreateLogger<Program>();
 
 [DllImport("kernel32.dll")]

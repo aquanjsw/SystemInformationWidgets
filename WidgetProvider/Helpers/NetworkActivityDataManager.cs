@@ -6,15 +6,15 @@ using System.Net.NetworkInformation;
 
 namespace WidgetProvider.Helpers;
 
-internal partial class NetworkUsageDataManager : IDisposable
+internal partial class NetworkActivityDataManager : IDisposable
 {
   private PerformanceCounter? sentSpeedCounter;
   private PerformanceCounter? recvSpeedCounter;
   private string currentIf = "";
   private readonly ILogger logger;
-  public NetworkUsageDataManager()
+  public NetworkActivityDataManager()
   {
-    logger = Providers.GetLoggerFactory().CreateLogger<NetworkUsageDataManager>();
+    logger = Providers.GetLoggerFactory().CreateLogger<NetworkActivityDataManager>();
     UpdateCounters();
   }
   public string Interface => currentIf;

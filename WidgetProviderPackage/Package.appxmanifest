@@ -9,12 +9,12 @@
   IgnorableNamespaces="uap rescap">
 
 	<Identity
-	  Name="027c24d0-387e-4f75-b67b-e7c587ed587a"
-	  Publisher="CN=Administrator"
-	  Version="1.0.0.0" />
+	  Name="ShinRag.244659EC09565"
+	  Publisher="CN=7EF980D1-EF59-4DE2-B2AF-6EDB2CA131CC"
+	  Version="1.0.1.0" />
 
 	<Properties>
-		<DisplayName>System Widgets</DisplayName>
+		<DisplayName>ms-resource:PackageManifest_Application_DisplayName</DisplayName>
 		<PublisherDisplayName>Shin Rag</PublisherDisplayName>
 		<Logo>Images\StoreLogo.png</Logo>
 	</Properties>
@@ -25,7 +25,8 @@
 	</Dependencies>
 
 	<Resources>
-		<Resource Language="x-generate"/>
+		<Resource Language="en-US"/>
+		<Resource Language="zh-CN"/>
 	</Resources>
 
 	<Applications>
@@ -33,8 +34,8 @@
 		  Executable="$targetnametoken$.exe"
 		  EntryPoint="$targetentrypoint$">
 			<uap:VisualElements
-			  DisplayName="System Widgets"
-			  Description="Widgets for system information"
+			  DisplayName="ms-resource:PackageManifest_Application_DisplayName"
+			  Description="ms-resource:PackageManifest_Application_Description"
 			  BackgroundColor="transparent"
 			  Square150x150Logo="Images\Square150x150Logo.png"
 			  Square44x44Logo="Images\Square44x44Logo.png">
@@ -45,12 +46,12 @@
 				<com:Extension Category="windows.comServer">
 					<com:ComServer>
 						<com:ExeServer Executable="WidgetProvider\WidgetProvider.exe" DisplayName="System Widget Provider">
-							<com:Class Id="88C44EA9-032B-4443-A7ED-21182BAD7079" DisplayName="System Widget Provider" />
+							<com:Class Id="88C44EA9-032B-4443-A7ED-21182BAD7079" DisplayName="Class for System Widget Provider" />
 						</com:ExeServer>
 					</com:ComServer>
 				</com:Extension>
 				<uap3:Extension Category="windows.appExtension">
-					<uap3:AppExtension Name="com.microsoft.windows.widgets" DisplayName="System Widgets" Id="SystemWidgets" PublicFolder="Public">
+					<uap3:AppExtension Name="com.microsoft.windows.widgets" DisplayName="ms-resource:PackageManifest_Application_DisplayName" Id="SystemWidgets" PublicFolder="Public">
 						<uap3:Properties>
 							<WidgetProvider>
 								<ProviderIcons>
@@ -65,9 +66,9 @@
 								</TrustedPackageFamilyNames>
 
 								<Definitions>
-									<Definition Id="NetworkUsage"
-										DisplayName="Network Usage"
-										Description="Monitor network usage"
+									<Definition Id="NetworkActivity"
+										DisplayName="ms-resource:PackageManifest_NetworkActivity_DisplayName"
+										Description="ms-resource:PackageManifest_NetworkActivity_Description"
 										AllowMultiple="false">
 										<Capabilities>
 											<Capability>
@@ -79,13 +80,11 @@
 										</Capabilities>
 										<ThemeResources>
 											<Icons>
-												<Icon Path="ProviderAssets\NetworkUsageWidgetIcon.png" />
+												<Icon Path="ProviderAssets\NetworkActivityWidgetIcon.png" />
 											</Icons>
 											<Screenshots>
-												<Screenshot Path="ProviderAssets\NetworkUsageWidgetScreenshot.png" DisplayAltText="Network Usage Widget Screenshot" />
+												<Screenshot Path="ProviderAssets\NetworkActivityWidgetScreenshot.png" DisplayAltText="Network Activity Widget Screenshot"/>
 											</Screenshots>
-											<DarkMode />
-											<LightMode />
 										</ThemeResources>
 									</Definition>
 								</Definitions>
@@ -98,7 +97,6 @@
 	</Applications>
 
 	<Capabilities>
-		<Capability Name="internetClient" />
 		<rescap:Capability Name="runFullTrust" />
 	</Capabilities>
 </Package>

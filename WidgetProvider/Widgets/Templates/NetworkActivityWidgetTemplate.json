@@ -12,7 +12,7 @@
           "items": [
             {
               "type": "TextBlock",
-              "text": "Send",
+              "text": "{{NetworkActivityTemplate_Send}}",
               "wrap": true,
               "style": "heading",
               "isSubtle": true,
@@ -27,7 +27,7 @@
           "items": [
             {
               "type": "TextBlock",
-              "text": "Receive",
+              "text": "{{NetworkActivityTemplate_Receive}}",
               "wrap": true,
               "horizontalAlignment": "Right",
               "style": "heading",
@@ -73,7 +73,7 @@
     },
     {
       "type": "TextBlock",
-      "text": "Default Interface",
+      "text": "{{NetworkActivityTemplate_Interface}}",
       "wrap": true,
       "isSubtle": true,
       "$when": "${$host.widgetSize==\"medium\"}"
@@ -91,10 +91,10 @@
       "actions": [
         {
           "type": "Action.Execute",
-          "title": "Redetect",
+          "title": "{{NetworkActivityTemplate_Redetect}}",
           "verb": "redetect",
-          "isEnabled": "${isRedetectEnabled}",
-          "tooltip": "Redetect default interface"
+          "isEnabled": "${isRedetectActionEnabled}",
+          "tooltip": "{{NetworkActivityTemplate_RedetectTooltip}}"
         }
       ],
       "horizontalAlignment": "Right",

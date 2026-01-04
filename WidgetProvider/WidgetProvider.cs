@@ -16,7 +16,7 @@ internal partial class WidgetProvider : IWidgetProvider
   {
     logger = Helpers.Providers.GetLoggerFactory().CreateLogger<WidgetProvider>();
 
-    widgetCreators.Add("NetworkUsage", new WidgetInterfaceFactory<NetworkUsageWidget>());
+    widgetCreators.Add("NetworkActivity", new WidgetInterfaceFactory<NetworkActivityWidget>());
 
     /// Recover widgets
     foreach (var widgetInfo in WidgetManager.GetDefault().GetWidgetInfos())

@@ -1,24 +1,25 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <OutputType>Exe</OutputType>
+    <OutputType>WinExe</OutputType>
     <TargetFramework>net10.0-windows10.0.26100.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <RuntimeIdentifiers>win-x64</RuntimeIdentifiers>
     <SupportedOSPlatformVersion>10.0.19041.0</SupportedOSPlatformVersion>
+    <Platforms>x64</Platforms>
   </PropertyGroup>
 
   <ItemGroup>
     <None Remove="appsettings_Development.json" />
-    <None Remove="Widgets\Templates\NetworkUsageWidgetTemplate.json" />
+    <None Remove="Widgets\Templates\NetworkActivityWidgetTemplate.json" />
   </ItemGroup>
 
   <ItemGroup>
     <Content Include="appsettings_Development.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Widgets\Templates\NetworkUsageWidgetTemplate.json">
+    <Content Include="Widgets\Templates\NetworkActivityWidgetTemplate.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
@@ -34,19 +35,6 @@
     <PackageReference Include="System.Management" Version="10.0.1" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Strings\en-US\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PRIResource Update="Strings\en-US\Resources.resw">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </PRIResource>
-    <PRIResource Update="Strings\zh-CN\Resources.resw">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </PRIResource>
-  </ItemGroup>
-
   <ProjectExtensions><VisualStudio><UserProperties appsettings_3development_1json__JsonSchema="appsettings" /></VisualStudio></ProjectExtensions>
 
   <ItemGroup>
@@ -55,6 +43,17 @@
 
   <ItemGroup>
     <None Include="D:\source\WindowsWidgets\WidgetProvider\.editorconfig" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Resources\Strings.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Strings.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Strings.zh-CN.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Strings.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
 
 </Project>

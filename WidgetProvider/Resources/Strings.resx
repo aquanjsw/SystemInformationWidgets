@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -117,10 +117,19 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="NetworkUsageMonitorWidgetTemplate.Recv" xml:space="preserve">
+  <data name="NetworkActivityTemplate_Interface" xml:space="preserve">
+    <value>Interface</value>
+  </data>
+  <data name="NetworkActivityTemplate_Receive" xml:space="preserve">
     <value>Receive</value>
   </data>
-  <data name="NetworkUsageMonitorWidgetTemplate.Send" xml:space="preserve">
+  <data name="NetworkActivityTemplate_Redetect" xml:space="preserve">
+    <value>Redetect</value>
+  </data>
+  <data name="NetworkActivityTemplate_RedetectTooltip" xml:space="preserve">
+    <value>Redetect interface</value>
+  </data>
+  <data name="NetworkActivityTemplate_Send" xml:space="preserve">
     <value>Send</value>
   </data>
 </root>
