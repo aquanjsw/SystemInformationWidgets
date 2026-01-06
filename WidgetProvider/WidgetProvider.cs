@@ -17,6 +17,7 @@ internal partial class WidgetProvider : IWidgetProvider
     logger = Helpers.Providers.GetLoggerFactory().CreateLogger<WidgetProvider>();
 
     widgetCreators.Add("NetworkActivity", new WidgetInterfaceFactory<NetworkActivityWidget>());
+    widgetCreators.Add("DiskActivity", new WidgetInterfaceFactory<DiskActivityWidget>());
 
     /// Recover widgets
     foreach (var widgetInfo in WidgetManager.GetDefault().GetWidgetInfos())
@@ -46,12 +47,12 @@ internal partial class WidgetProvider : IWidgetProvider
   public void Activate(WidgetContext widgetContext)
   {
     runningWidgets[widgetContext.Id].Activate();
-    logger.LogDebug("Widget activated: {definitionId} - {id}", widgetContext.DefinitionId, widgetContext.Id);
+    logger.LogInformation("Widget activated: {definitionId} - {id}", widgetContext.DefinitionId, widgetContext.Id);
   }
   public void Deactivate(string widgetId)
   {
     runningWidgets[widgetId].Deactivate();
-    logger.LogDebug("Widget deactivated: {widgetId}", widgetId);
+    logger.LogInformation("Widget deactivated: {widgetId}", widgetId);
   }
   public void DeleteWidget(string widgetId, string customState)
   {

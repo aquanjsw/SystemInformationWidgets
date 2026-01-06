@@ -11,7 +11,7 @@
 	<Identity
 	  Name="ShinRag.244659EC09565"
 	  Publisher="CN=7EF980D1-EF59-4DE2-B2AF-6EDB2CA131CC"
-	  Version="1.0.1.0" />
+	  Version="1.1.0.0" />
 
 	<Properties>
 		<DisplayName>ms-resource:PackageManifest_Application_DisplayName</DisplayName>
@@ -25,8 +25,7 @@
 	</Dependencies>
 
 	<Resources>
-		<Resource Language="en-US"/>
-		<Resource Language="zh-CN"/>
+		<Resource Language="x-generate"></Resource>
 	</Resources>
 
 	<Applications>
@@ -83,11 +82,44 @@
 												<Icon Path="ProviderAssets\NetworkActivityWidgetIcon.png" />
 											</Icons>
 											<Screenshots>
-												<Screenshot Path="ProviderAssets\NetworkActivityWidgetScreenshot.png" DisplayAltText="Network Activity Widget Screenshot"/>
+												<Screenshot Path="ProviderAssets\NetworkActivityWidgetScreenshot.png" />
 											</Screenshots>
+											<DarkMode>
+												<Screenshots>
+													<Screenshot Path="ProviderAssets\NetworkActivityWidgetScreenshot_Dark.png" />
+												</Screenshots>
+											</DarkMode>
+										</ThemeResources>
+									</Definition>
+
+									<Definition Id="DiskActivity"
+										DisplayName="ms-resource:PackageManifest_DiskActivity_DisplayName"
+										Description="ms-resource:PackageManifest_DiskActivity_Description"
+										AllowMultiple="false">
+										<Capabilities>
+											<Capability>
+												<Size Name="small" />
+											</Capability>
+											<Capability>
+												<Size Name="medium" />
+											</Capability>
+										</Capabilities>
+										<ThemeResources>
+											<Icons>
+												<Icon Path="ProviderAssets\DiskActivityWidgetIcon.png" />
+											</Icons>
+											<Screenshots>
+												<Screenshot Path="ProviderAssets\DiskActivityWidgetScreenshot.png" />
+											</Screenshots>
+											<DarkMode>
+												<Screenshots>
+													<Screenshot Path="ProviderAssets\DiskActivityWidgetScreenshot_Dark.png" />
+												</Screenshots>
+											</DarkMode>
 										</ThemeResources>
 									</Definition>
 								</Definitions>
+
 							</WidgetProvider>
 						</uap3:Properties>
 					</uap3:AppExtension>

@@ -61,47 +61,38 @@ namespace WidgetProvider.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Interface.
+        ///   Looks up a localized string similar to Read.
         /// </summary>
-        internal static string NetworkUsageTemplate_Interface {
+        internal static string DiskActivityTemplate_Read {
             get {
-                return ResourceManager.GetString("NetworkUsageTemplate_Interface", resourceCulture);
+                return ResourceManager.GetString("DiskActivityTemplate_Read", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Write.
+        /// </summary>
+        internal static string DiskActivityTemplate_Write {
+            get {
+                return ResourceManager.GetString("DiskActivityTemplate_Write", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Receive.
         /// </summary>
-        internal static string NetworkUsageTemplate_Receive {
+        internal static string NetworkActivityTemplate_Recv {
             get {
-                return ResourceManager.GetString("NetworkUsageTemplate_Receive", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Redetect.
-        /// </summary>
-        internal static string NetworkUsageTemplate_Redetect {
-            get {
-                return ResourceManager.GetString("NetworkUsageTemplate_Redetect", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Redetect interface.
-        /// </summary>
-        internal static string NetworkUsageTemplate_RedetectTooltip {
-            get {
-                return ResourceManager.GetString("NetworkUsageTemplate_RedetectTooltip", resourceCulture);
+                return ResourceManager.GetString("NetworkActivityTemplate_Recv", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Send.
         /// </summary>
-        internal static string NetworkUsageTemplate_Send {
+        internal static string NetworkActivityTemplate_Sent {
             get {
-                return ResourceManager.GetString("NetworkUsageTemplate_Send", resourceCulture);
+                return ResourceManager.GetString("NetworkActivityTemplate_Sent", resourceCulture);
             }
         }
     }

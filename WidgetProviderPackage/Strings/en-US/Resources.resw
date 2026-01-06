@@ -129,4 +129,10 @@
   <data name="PackageManifest_NetworkActivity_Description" xml:space="preserve">
     <value>Monitor network send and receive activity</value>
   </data>
+  <data name="PackageManifest_DiskActivity_DisplayName" xml:space="preserve">
+    <value>Disk Activity</value>
+  </data>
+  <data name="PackageManifest_DiskActivity_Description" xml:space="preserve">
+    <value>Monitor disk read and write activity</value>
+  </data>
 </root>

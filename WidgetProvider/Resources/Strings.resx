@@ -117,19 +117,16 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="NetworkActivityTemplate_Interface" xml:space="preserve">
-    <value>Interface</value>
+  <data name="DiskActivityTemplate_Read" xml:space="preserve">
+    <value>Read</value>
   </data>
-  <data name="NetworkActivityTemplate_Receive" xml:space="preserve">
+  <data name="DiskActivityTemplate_Write" xml:space="preserve">
+    <value>Write</value>
+  </data>
+  <data name="NetworkActivityTemplate_Recv" xml:space="preserve">
     <value>Receive</value>
   </data>
-  <data name="NetworkActivityTemplate_Redetect" xml:space="preserve">
-    <value>Redetect</value>
-  </data>
-  <data name="NetworkActivityTemplate_RedetectTooltip" xml:space="preserve">
-    <value>Redetect interface</value>
-  </data>
-  <data name="NetworkActivityTemplate_Send" xml:space="preserve">
+  <data name="NetworkActivityTemplate_Sent" xml:space="preserve">
     <value>Send</value>
   </data>
 </root>
