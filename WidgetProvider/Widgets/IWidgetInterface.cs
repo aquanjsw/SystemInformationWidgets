@@ -13,5 +13,6 @@ namespace WidgetProvider.Widgets
     void Deactivate();
     void DeleteWidget();
     void OnActionInvoked(WidgetActionInvokedArgs args);
+    void OnWidgetContextChanged(WidgetContextChangedArgs args);
   }
 }

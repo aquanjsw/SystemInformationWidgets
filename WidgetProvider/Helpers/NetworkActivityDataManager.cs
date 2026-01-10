@@ -7,10 +7,11 @@ internal partial class NetworkActivityDataManager : IDisposable
 {
   private readonly List<PerformanceCounter> sentSpeedCounters = [];
   private readonly List<PerformanceCounter> recvSpeedCounters = [];
-  private readonly ILogger logger;
+  private readonly ILogger logger = Providers.GetLoggerFactory().CreateLogger<NetworkActivityDataManager>();
+  private readonly NetworkActivityChart chart = new();
+  public bool IsChartEnabled { get; set; } = false;
   public NetworkActivityDataManager()
   {
-    logger = Providers.GetLoggerFactory().CreateLogger<NetworkActivityDataManager>();
     var pcc = new PerformanceCounterCategory("Network Interface");
     foreach (var name in pcc.GetInstanceNames())
     {
@@ -19,8 +20,28 @@ internal partial class NetworkActivityDataManager : IDisposable
       recvSpeedCounters.Add(new PerformanceCounter("Network Interface", "Bytes Received/sec", name));
     }
   }
-  public string GetSentSpeed() => GetSpeedString(sentSpeedCounters.Aggregate(0f, (acc, counter) => acc + counter.NextValue()));
-  public string GetRecvSpeed() => GetSpeedString(recvSpeedCounters.Aggregate(0f, (acc, counter) => acc + counter.NextValue()));
+  private float GetSentSpeed() => sentSpeedCounters.Aggregate(0f, (acc, counter) => acc + counter.NextValue());
+  private float GetRecvSpeed() => recvSpeedCounters.Aggregate(0f, (acc, counter) => acc + counter.NextValue());
+  public NetworkActivityData GetData()
+  {
+    var sentSpeed = GetSentSpeed() * 8 / 1024;
+    var recvSpeed = GetRecvSpeed() * 8 / 1024;
+    var chartURL = string.Empty;
+    var upperLimit = string.Empty;
+    if (IsChartEnabled)
+    {
+      chart.AddValue(sentSpeed + recvSpeed);
+      chartURL = chart.CreateURL();
+      upperLimit = chart.CurrentUpperLimitString;
+    }
+    var ret = new NetworkActivityData(
+      SentSpeed: chart.Value2String(sentSpeed, 1),
+      RecvSpeed: chart.Value2String(recvSpeed, 1),
+      ChartURL: chartURL,
+      UpperLimit: upperLimit
+    );
+    return ret;
+  }
   public void Dispose()
   {
     for (int i = 0; i < sentSpeedCounters.Count; i++)
@@ -29,13 +50,12 @@ internal partial class NetworkActivityDataManager : IDisposable
       recvSpeedCounters[i].Dispose();
     }
   }
-  private static string GetSpeedString(float speed)
-  {
-    if (speed < 1024 * 1024)
-    {
-      return $"{speed / 1024:F0} KB/s";
-    }
-    return $"{speed / 1024 / 1024:F1} MB/s";
-  }
 }
+
+internal record NetworkActivityData(
+  string SentSpeed,
+  string RecvSpeed,
+  string ChartURL,
+  string UpperLimit
+);
 

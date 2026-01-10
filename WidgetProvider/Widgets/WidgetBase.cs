@@ -40,4 +40,5 @@ internal abstract class WidgetBase : IWidgetInterface
     Deactivate();
   }
   public virtual void OnActionInvoked(WidgetActionInvokedArgs args) { }
+  public virtual void OnWidgetContextChanged(WidgetContextChangedArgs args) { }
 }

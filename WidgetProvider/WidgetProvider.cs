@@ -71,7 +71,8 @@ internal partial class WidgetProvider : IWidgetProvider
   }
   public void OnWidgetContextChanged(WidgetContextChangedArgs args)
   {
-    // No context change handling for now
+    runningWidgets[args.WidgetContext.Id].OnWidgetContextChanged(args);
+    logger.LogInformation("Widget context changed: {widgetId} - {widgetDefinitionId}, size: {size}", args.WidgetContext.Id, args.WidgetContext.DefinitionId, args.WidgetContext.Size);
   }
   public static ManualResetEvent GetEmptyWidgetEvent() => emptyWidgetEvent;
 }
