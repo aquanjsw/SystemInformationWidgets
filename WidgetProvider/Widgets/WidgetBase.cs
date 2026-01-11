@@ -15,6 +15,7 @@ internal abstract class WidgetBase : IWidgetInterface
     var templatePath = Path.Combine(Windows.ApplicationModel.Package.Current.EffectivePath, RelativeTemplatePath);
     template = File.ReadAllText(templatePath);
     template = Helpers.Resources.Localize(template);
+    Logger.LogInformation("Widget template loaded from: {path}", templatePath);
   }
   public virtual string GetTemplate() => template;
   public abstract string GetData();

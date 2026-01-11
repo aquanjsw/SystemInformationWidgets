@@ -32,7 +32,6 @@ internal abstract class ChartBase
     var chartStr = CreateChart();
     chartStr = Convert.ToBase64String(Encoding.UTF8.GetBytes(chartStr));
     var url = "data:image/svg+xml;base64," + chartStr;
-    Logger.LogTrace("{url}", url);
     return url;
   }
   private string CreateChart()
@@ -77,6 +76,7 @@ internal abstract class ChartBase
 
       var chartStr = svg.ToString();
       chartStr = chartStr.Replace("<svg", "<svg xmlns=\"http://www.w3.org/2000/svg\"");
+      Logger.LogDebug("Chart created");
       Logger.LogTrace("{chartStr}", chartStr);
       return chartStr;
     }
@@ -91,7 +91,7 @@ internal abstract class ChartBase
       strPoints.Add($"{xCoords[i]},{y}");
     }
     linePoints = string.Join(" ", strPoints);
-    fillPoints = $"0,{chartHeight} {chartWidth},{chartHeight} {linePoints}";
+    fillPoints = $"{chartWidth},{chartHeight} 0,{chartHeight} {linePoints}";
   }
 
   public virtual void SetChartSize(Enums.ChartSize chartSize)
@@ -122,8 +122,9 @@ internal abstract class ChartBase
       }
     }
     int acc = 0;
-    var ret = steps.Select(x => acc += x).Reverse().Append(0).ToArray();
-    ret[0] += 1;
+    var ret = steps.Select(x => acc += x).Prepend(0).ToArray();
+    // For beautify
+    ret[capacity - 1] += 1;
     return ret;
   }
   public void AddValue(float value)

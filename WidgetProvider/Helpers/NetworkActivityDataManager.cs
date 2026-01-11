@@ -35,8 +35,8 @@ internal partial class NetworkActivityDataManager : IDisposable
       upperLimit = chart.CurrentUpperLimitString;
     }
     var ret = new NetworkActivityData(
-      SentSpeed: chart.Value2String(sentSpeed, 1),
-      RecvSpeed: chart.Value2String(recvSpeed, 1),
+      SentSpeed: chart.Value2String(sentSpeed),
+      RecvSpeed: chart.Value2String(recvSpeed),
       ChartURL: chartURL,
       UpperLimit: upperLimit
     );
