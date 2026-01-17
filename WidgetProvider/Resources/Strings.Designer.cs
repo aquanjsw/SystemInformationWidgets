@@ -95,5 +95,14 @@ namespace WidgetProvider.Resources {
                 return ResourceManager.GetString("NetworkActivityTemplate_Sent", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Thoughput.
+        /// </summary>
+        internal static string NetworkActivityTemplate_Throughput {
+            get {
+                return ResourceManager.GetString("NetworkActivityTemplate_Throughput", resourceCulture);
+            }
+        }
     }
 }

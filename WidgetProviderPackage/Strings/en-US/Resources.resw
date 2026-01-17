@@ -118,13 +118,13 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="PackageManifest_Application_Description" xml:space="preserve">
-    <value>Widgets for system information</value>
+    <value>Simple widgets for monitoring system activity</value>
   </data>
   <data name="PackageManifest_NetworkActivity_DisplayName" xml:space="preserve">
     <value>Network Activity</value>
   </data>
   <data name="PackageManifest_Application_DisplayName" xml:space="preserve">
-    <value>System Information</value>
+    <value>System Activity Widgets</value>
   </data>
   <data name="PackageManifest_NetworkActivity_Description" xml:space="preserve">
     <value>Monitor network send and receive activity</value>
@@ -134,5 +134,8 @@
   </data>
   <data name="PackageManifest_DiskActivity_Description" xml:space="preserve">
     <value>Monitor disk read and write activity</value>
+  </data>
+  <data name="PackageManifest_Widget_DisplayName" xml:space="preserve">
+    <value>System Activity</value>
   </data>
 </root>

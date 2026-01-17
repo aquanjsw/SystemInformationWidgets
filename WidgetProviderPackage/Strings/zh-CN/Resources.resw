@@ -118,13 +118,13 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="PackageManifest_Application_Description" xml:space="preserve">
-    <value>系统信息相关的小组件</value>
+    <value>用于监视系统活动的简单小组件</value>
   </data>
   <data name="PackageManifest_NetworkActivity_DisplayName" xml:space="preserve">
     <value>网络活动</value>
   </data>
   <data name="PackageManifest_Application_DisplayName" xml:space="preserve">
-    <value>系统信息</value>
+    <value>系统活动小组件</value>
   </data>
   <data name="PackageManifest_NetworkActivity_Description" xml:space="preserve">
     <value>监视网络发送与接收活动</value>
@@ -134,5 +134,8 @@
   </data>
   <data name="PackageManifest_DiskActivity_Description" xml:space="preserve">
     <value>监视硬盘读取与写入活动</value>
+  </data>
+  <data name="PackageManifest_Widget_DisplayName" xml:space="preserve">
+    <value>系统活动</value>
   </data>
 </root>

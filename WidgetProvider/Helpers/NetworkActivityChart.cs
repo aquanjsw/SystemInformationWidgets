@@ -36,7 +36,7 @@ internal class NetworkActivityChart
   private static float DecayThreshold => 0.2f;
 
   private const int ChartWidth = 268;
-  private const int ChartHeight = 86;
+  private const int ChartHeight = 150;
   private const int Capacity = 34;
   private const string MainColor = "rgb(245,98,142)";
   private const int LegendStrokeWidth = 3;

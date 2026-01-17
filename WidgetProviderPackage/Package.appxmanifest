@@ -11,7 +11,7 @@
 	<Identity
 	  Name="ShinRag.244659EC09565"
 	  Publisher="CN=7EF980D1-EF59-4DE2-B2AF-6EDB2CA131CC"
-	  Version="1.1.0.0" />
+	  Version="1.2.1.0" />
 
 	<Properties>
 		<DisplayName>ms-resource:PackageManifest_Application_DisplayName</DisplayName>
@@ -50,7 +50,7 @@
 					</com:ComServer>
 				</com:Extension>
 				<uap3:Extension Category="windows.appExtension">
-					<uap3:AppExtension Name="com.microsoft.windows.widgets" DisplayName="ms-resource:PackageManifest_Application_DisplayName" Id="SystemWidgets" PublicFolder="Public">
+					<uap3:AppExtension Name="com.microsoft.windows.widgets" DisplayName="ms-resource:PackageManifest_Widget_DisplayName" Id="SystemActivityInformation" PublicFolder="Public">
 						<uap3:Properties>
 							<WidgetProvider>
 								<ProviderIcons>

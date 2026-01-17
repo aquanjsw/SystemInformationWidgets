@@ -129,4 +129,7 @@
   <data name="NetworkActivityTemplate_Sent" xml:space="preserve">
     <value>Send</value>
   </data>
+  <data name="NetworkActivityTemplate_Throughput" xml:space="preserve">
+    <value>Thoughput</value>
+  </data>
 </root>

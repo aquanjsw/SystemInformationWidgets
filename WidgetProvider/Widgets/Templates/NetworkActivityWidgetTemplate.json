@@ -4,13 +4,36 @@
   "version": "1.6",
   "body": [
     {
-      "type": "TextBlock",
-      "text": "${UpperLimit}",
-      "wrap": true,
-      "isSubtle": true,
-      "size": "Small",
-      "horizontalAlignment": "Right",
-      "$when": "${$host.widgetSize==\"medium\"}"
+      "type": "ColumnSet",
+      "columns": [
+        {
+          "type": "Column",
+          "items": [
+            {
+              "type": "TextBlock",
+              "text": "{{NetworkActivityTemplate_Throughput}}",
+              "wrap": true,
+              "isSubtle": true,
+              "size": "Small",
+              "$when": "${$host.widgetSize==\"medium\"}"
+            }
+          ]
+        },
+        {
+          "type": "Column",
+          "items": [
+            {
+              "type": "TextBlock",
+              "text": "${UpperLimit}",
+              "wrap": true,
+              "isSubtle": true,
+              "size": "Small",
+              "horizontalAlignment": "Right",
+              "$when": "${$host.widgetSize==\"medium\"}"
+            }
+          ]
+        }
+      ]
     },
     {
       "type": "Image",
