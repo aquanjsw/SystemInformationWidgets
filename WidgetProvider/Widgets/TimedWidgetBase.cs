@@ -2,21 +2,29 @@
 
 internal abstract class TimedWidgetBase : WidgetBase , IDisposable
 {
-  protected readonly System.Timers.Timer updateTimer = new(1500);
-  public TimedWidgetBase() : base()
+  private readonly System.Timers.Timer _updateTimer = new(1500);
+
+  protected TimedWidgetBase()
   {
-    updateTimer.Elapsed += (_, _) => UpdateWidget();
+    _updateTimer.Elapsed += (_, _) => UpdateWidget();
+  }
+
+  protected override void UpdateWidget()
+  {
+    _updateTimer.Stop();
+    base.UpdateWidget();
+    _updateTimer.Start();
   }
   public override void Activate()
   {
-    updateTimer.Start();
+    _updateTimer.Start();
   }
   public override void Deactivate()
   {
-    updateTimer.Stop();
+    _updateTimer.Stop();
   }
   public virtual void Dispose()
   {
-    updateTimer.Dispose();
+    _updateTimer.Dispose();
   }
 }

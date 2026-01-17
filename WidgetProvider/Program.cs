@@ -46,4 +46,3 @@ else
     throw new Exception("Failed to revoke class object. Error code: " + errno);
   }
 }
-

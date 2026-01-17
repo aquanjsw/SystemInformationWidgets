@@ -124,7 +124,7 @@
     <value>网络活动</value>
   </data>
   <data name="PackageManifest_Application_DisplayName" xml:space="preserve">
-    <value>系统信息小组件</value>
+    <value>系统信息</value>
   </data>
   <data name="PackageManifest_NetworkActivity_Description" xml:space="preserve">
     <value>监视网络发送与接收活动</value>

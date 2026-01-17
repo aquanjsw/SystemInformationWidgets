@@ -16,6 +16,7 @@ internal abstract class WidgetBase : IWidgetInterface
     template = File.ReadAllText(templatePath);
     template = Helpers.Resources.Localize(template);
     Logger.LogInformation("Widget template loaded from: {path}", templatePath);
+    Logger.LogDebug("Widget template content: {template}", template);
   }
   public virtual string GetTemplate() => template;
   public abstract string GetData();
@@ -25,12 +26,15 @@ internal abstract class WidgetBase : IWidgetInterface
     Id = widgetContext.Id;
     DefinitionId = widgetContext.DefinitionId;
   }
-  protected void UpdateWidget()
+  protected virtual void UpdateWidget()
   {
+    Logger.LogDebug("Getting widget data...");
+    var data = GetData();
+    Logger.LogTrace("Updating widget data: {data}", data);
     WidgetUpdateRequestOptions options = new(Id)
     {
       Template = GetTemplate(),
-      Data = GetData()
+      Data = data
     };
     WidgetManager.GetDefault().UpdateWidget(options);
   }

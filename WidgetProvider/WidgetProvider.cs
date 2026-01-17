@@ -10,8 +10,8 @@ internal partial class WidgetProvider : IWidgetProvider
 {
   private readonly ILogger logger;
   private readonly Dictionary<WidgetDefinitionId, IWidgetInterfaceFactory> widgetCreators = [];
-  private readonly static Dictionary<WidgetId, IWidgetInterface> runningWidgets = [];
-  private readonly static ManualResetEvent emptyWidgetEvent = new(false);
+  private static readonly Dictionary<WidgetId, IWidgetInterface> runningWidgets = [];
+  private static readonly ManualResetEvent emptyWidgetEvent = new(false);
   public WidgetProvider()
   {
     logger = Helpers.Providers.GetLoggerFactory().CreateLogger<WidgetProvider>();
@@ -76,4 +76,3 @@ internal partial class WidgetProvider : IWidgetProvider
   }
   public static ManualResetEvent GetEmptyWidgetEvent() => emptyWidgetEvent;
 }
-

@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 using System.Diagnostics;
+using WidgetProvider.Helpers.Records;
 
 namespace WidgetProvider.Helpers;
 
@@ -10,6 +11,7 @@ internal partial class NetworkActivityDataManager : IDisposable
   private readonly ILogger logger = Providers.GetLoggerFactory().CreateLogger<NetworkActivityDataManager>();
   private readonly NetworkActivityChart chart = new();
   public bool IsChartEnabled { get; set; } = false;
+
   public NetworkActivityDataManager()
   {
     var pcc = new PerformanceCounterCategory("Network Interface");
@@ -20,42 +22,41 @@ internal partial class NetworkActivityDataManager : IDisposable
       recvSpeedCounters.Add(new PerformanceCounter("Network Interface", "Bytes Received/sec", name));
     }
   }
+
   private float GetSentSpeed() => sentSpeedCounters.Aggregate(0f, (acc, counter) => acc + counter.NextValue());
   private float GetRecvSpeed() => recvSpeedCounters.Aggregate(0f, (acc, counter) => acc + counter.NextValue());
-  public NetworkActivityData GetData()
+
+  public Dictionary<string, string> GetData()
   {
-    var sentSpeed = GetSentSpeed() * 8 / 1024;
-    var recvSpeed = GetRecvSpeed() * 8 / 1024;
-    var chartURL = string.Empty;
+    var sentKbps = GetSentSpeed() * 8 / 1024;
+    var recvKbps = GetRecvSpeed() * 8 / 1024;
+    var chartUrl = string.Empty;
     var upperLimit = string.Empty;
     if (IsChartEnabled)
     {
-      chart.AddValue(sentSpeed + recvSpeed);
-      chartURL = chart.CreateURL();
+      chart.AddSample(new NetworkActivitySample(sentKbps, recvKbps));
+      logger.LogDebug("Getting chart url");
+      chartUrl = chart.GetMainChartUrl();
       upperLimit = chart.CurrentUpperLimitString;
     }
-    var ret = new NetworkActivityData(
-      SentSpeed: chart.Value2String(sentSpeed),
-      RecvSpeed: chart.Value2String(recvSpeed),
-      ChartURL: chartURL,
-      UpperLimit: upperLimit
-    );
-    return ret;
+
+    return new Dictionary<string, string>
+    {
+      { "SentSpeed", NetworkActivityChart.Value2String(sentKbps) },
+      { "RecvSpeed", NetworkActivityChart.Value2String(recvKbps) },
+      { "ChartUrl", chartUrl },
+      { "UpperLimit", upperLimit },
+      { "SentLegendUrl", NetworkActivityChart.SentLegendUrl },
+      { "RecvLegendUrl", NetworkActivityChart.RecvLegendUrl }
+    };
   }
+
   public void Dispose()
   {
-    for (int i = 0; i < sentSpeedCounters.Count; i++)
+    for (var i = 0; i < sentSpeedCounters.Count; i++)
     {
       sentSpeedCounters[i].Dispose();
       recvSpeedCounters[i].Dispose();
     }
   }
 }
-
-internal record NetworkActivityData(
-  string SentSpeed,
-  string RecvSpeed,
-  string ChartURL,
-  string UpperLimit
-);
-

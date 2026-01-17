@@ -14,76 +14,118 @@
     },
     {
       "type": "Image",
-      "url": "${ChartURL}",
+      "url": "${ChartUrl}",
       "horizontalAlignment": "Center",
       "$when": "${$host.widgetSize==\"medium\"}",
-      "spacing": "none"
+      "spacing": "None"
     },
     {
       "type": "ColumnSet",
       "columns": [
         {
           "type": "Column",
-          "width": "stretch",
+          "width": "7px",
           "items": [
             {
-              "type": "TextBlock",
-              "text": "{{NetworkActivityTemplate_Sent}}",
-              "style": "heading",
-              "isSubtle": true,
-              "size": "Default",
-              "weight": "Default"
+              "type": "Image",
+              "url": "${SentLegendUrl}",
+              "horizontalAlignment": "Left",
+              "spacing": "None"
+            }
+          ],
+          "verticalContentAlignment": "center",
+          "spacing": "None",
+          "$when": "${$host.widgetSize==\"medium\"}"
+        },
+        {
+          "type": "Column",
+          "width": "stretch",
+          "spacing": "none",
+          "items": [
+            {
+              "type": "ColumnSet",
+              "columns": [
+                {
+                  "type": "Column",
+                  "width": "stretch",
+                  "items": [
+                    {
+                      "type": "TextBlock",
+                      "text": "{{NetworkActivityTemplate_Sent}}",
+                      "style": "heading",
+                      "isSubtle": true,
+                      "size": "Default",
+                      "weight": "Default"
+                    }
+                  ]
+                },
+                {
+                  "type": "Column",
+                  "width": "stretch",
+                  "items": [
+                    {
+                      "type": "TextBlock",
+                      "text": "{{NetworkActivityTemplate_Recv}}",
+                      "horizontalAlignment": "Right",
+                      "style": "heading",
+                      "isSubtle": true,
+                      "size": "Default",
+                      "weight": "Default"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "ColumnSet",
+              "columns": [
+                {
+                  "type": "Column",
+                  "width": "stretch",
+                  "items": [
+                    {
+                      "type": "TextBlock",
+                      "text": "${SentSpeed}",
+                      "size": "Large",
+                      "weight": "Bolder"
+                    }
+                  ]
+                },
+                {
+                  "type": "Column",
+                  "width": "stretch",
+                  "items": [
+                    {
+                      "type": "TextBlock",
+                      "text": "${RecvSpeed}",
+                      "horizontalAlignment": "Right",
+                      "size": "Large",
+                      "weight": "Bolder",
+                      "color": "Default"
+                    }
+                  ]
+                }
+              ]
             }
           ]
         },
         {
           "type": "Column",
-          "width": "stretch",
+          "width": "7px",
           "items": [
             {
-              "type": "TextBlock",
-              "text": "{{NetworkActivityTemplate_Recv}}",
+              "type": "Image",
+              "url": "${RecvLegendUrl}",
               "horizontalAlignment": "Right",
-              "style": "heading",
-              "isSubtle": true,
-              "size": "Default",
-              "weight": "Default"
+              "spacing": "None"
             }
-          ]
+          ],
+          "verticalContentAlignment": "center",
+          "$when": "${$host.widgetSize==\"medium\"}",
+          "spacing": "none"
         }
-      ]
-    },
-    {
-      "type": "ColumnSet",
-      "columns": [
-        {
-          "type": "Column",
-          "width": "stretch",
-          "items": [
-            {
-              "type": "TextBlock",
-              "text": "${SentSpeed}",
-              "size": "Large",
-              "weight": "Bolder"
-            }
-          ]
-        },
-        {
-          "type": "Column",
-          "width": "stretch",
-          "items": [
-            {
-              "type": "TextBlock",
-              "text": "${RecvSpeed}",
-              "wrap": true,
-              "horizontalAlignment": "Right",
-              "size": "Large",
-              "weight": "Bolder",
-              "color": "Default"
-            }
-          ]
-        }
-      ]
+      ],
+      "spacing": "small"
     }
   ]
 }

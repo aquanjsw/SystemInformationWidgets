@@ -124,7 +124,7 @@
     <value>Network Activity</value>
   </data>
   <data name="PackageManifest_Application_DisplayName" xml:space="preserve">
-    <value>System Information Widgets</value>
+    <value>System Information</value>
   </data>
   <data name="PackageManifest_NetworkActivity_Description" xml:space="preserve">
     <value>Monitor network send and receive activity</value>
