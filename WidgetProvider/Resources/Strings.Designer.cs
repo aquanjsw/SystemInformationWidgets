@@ -61,6 +61,15 @@ namespace WidgetProvider.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Disk transfer rate.
+        /// </summary>
+        internal static string DiskActivityTemplate_DiskTransferRate {
+            get {
+                return ResourceManager.GetString("DiskActivityTemplate_DiskTransferRate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Read.
         /// </summary>
         internal static string DiskActivityTemplate_Read {

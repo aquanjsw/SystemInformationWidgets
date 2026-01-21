@@ -1,55 +1,13 @@
 ﻿using Microsoft.Extensions.Logging;
-using Microsoft.Windows.Widgets.Providers;
-using System.Text.Json;
+using WidgetProvider.Helpers;
 
 namespace WidgetProvider.Widgets;
 
-internal partial class NetworkActivityWidget : TimedWidgetBase
+internal sealed partial class NetworkActivityWidget : WidgetBase
 {
-  protected override ILogger Logger => Helpers.Providers.GetLoggerFactory().CreateLogger<NetworkActivityWidget>();
-  private readonly Helpers.NetworkActivityDataManager dataManager = new();
+  protected override ILogger Logger => Utils.LoggerFactory.CreateLogger<NetworkActivityWidget>();
+  protected override NetworkActivityDataManager DataManager => _dataManager;
   protected override string RelativeTemplatePath => @"Widgets\Templates\NetworkActivityWidgetTemplate.json";
-  public override string GetData() => JsonSerializer.Serialize(dataManager.GetData());
 
-  public override void Dispose()
-  {
-    dataManager.Dispose();
-    base.Dispose();
-  }
-
-  public override void OnWidgetContextChanged(WidgetContextChangedArgs args)
-  {
-    if (args.WidgetContext.Size == Microsoft.Windows.Widgets.WidgetSize.Medium)
-    {
-      dataManager.IsChartEnabled = true;
-      Logger.LogInformation("Chart enabled");
-    }
-    else
-    {
-      dataManager.IsChartEnabled = false;
-      Logger.LogInformation("Chart disabled");
-    }
-
-    base.OnWidgetContextChanged(args);
-  }
-
-  public override void Deactivate()
-  {
-    if (dataManager.IsChartEnabled)
-    {
-      return;
-    }
-
-    base.Deactivate();
-  }
-
-  public override void Activate()
-  {
-    if (dataManager.IsChartEnabled)
-    {
-      return;
-    }
-
-    base.Activate();
-  }
+  private readonly NetworkActivityDataManager _dataManager = new();
 }

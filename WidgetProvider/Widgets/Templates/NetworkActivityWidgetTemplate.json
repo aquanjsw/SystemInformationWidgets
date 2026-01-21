@@ -47,7 +47,7 @@
       "columns": [
         {
           "type": "Column",
-          "width": "7px",
+          "width": "${LegendWidth}",
           "items": [
             {
               "type": "Image",
@@ -134,7 +134,7 @@
         },
         {
           "type": "Column",
-          "width": "7px",
+          "width": "${LegendWidth}",
           "items": [
             {
               "type": "Image",

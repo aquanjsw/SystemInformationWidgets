@@ -1,10 +1,11 @@
 ﻿using Microsoft.Windows.Widgets.Providers;
 
 namespace WidgetProvider.Widgets;
-internal class WidgetInterfaceFactory<T>: IWidgetInterfaceFactory
-  where T : IWidgetInterface, new()
+
+internal class WidgetFactory<T> : IWidgetFactory
+  where T : IWidget, new()
 {
-  public IWidgetInterface CreateWidget(WidgetContext widgetContext)
+  public IWidget CreateWidget(WidgetContext widgetContext)
   {
     var widget = new T();
     widget.CreateWidget(widgetContext);

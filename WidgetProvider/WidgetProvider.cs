@@ -1,78 +1,102 @@
 ﻿using Microsoft.Extensions.Logging;
 using Microsoft.Windows.Widgets.Providers;
+using WidgetProvider.Helpers;
+using WidgetProvider.Widgets;
 
 namespace WidgetProvider;
 
-using Widgets;
 using WidgetDefinitionId = string;
 using WidgetId = string;
-internal partial class WidgetProvider : IWidgetProvider
+
+internal partial class WidgetProvider : IWidgetProvider, IDisposable
 {
-  private readonly ILogger logger;
-  private readonly Dictionary<WidgetDefinitionId, IWidgetInterfaceFactory> widgetCreators = [];
-  private static readonly Dictionary<WidgetId, IWidgetInterface> runningWidgets = [];
-  private static readonly ManualResetEvent emptyWidgetEvent = new(false);
+  public void Dispose()
+  {
+    foreach (var widgetId in RunningWidgets.Keys)
+    {
+      DeleteWidget(widgetId, string.Empty);
+    }
+  }
+
+  private readonly ILogger _logger;
+  private readonly Dictionary<WidgetDefinitionId, IWidgetFactory> _widgetCreators = [];
+  private static readonly Dictionary<WidgetId, IWidget> RunningWidgets = [];
+  private static readonly ManualResetEvent EmptyWidgetEvent = new(false);
+
   public WidgetProvider()
   {
-    logger = Helpers.Providers.GetLoggerFactory().CreateLogger<WidgetProvider>();
+    _logger = Utils.LoggerFactory.CreateLogger<WidgetProvider>();
 
-    widgetCreators.Add("NetworkActivity", new WidgetInterfaceFactory<NetworkActivityWidget>());
-    widgetCreators.Add("DiskActivity", new WidgetInterfaceFactory<DiskActivityWidget>());
+    _widgetCreators.Add("NetworkActivity", new WidgetFactory<NetworkActivityWidget>());
+    _widgetCreators.Add("DiskActivity", new WidgetFactory<DiskActivityWidget>());
 
-    /// Recover widgets
     foreach (var widgetInfo in WidgetManager.GetDefault().GetWidgetInfos())
     {
-      if (!runningWidgets.ContainsKey(widgetInfo.WidgetContext.Id))
+      if (!RunningWidgets.ContainsKey(widgetInfo.WidgetContext.Id))
       {
         CreateWidget(widgetInfo.WidgetContext);
       }
     }
   }
+
   public void CreateWidget(WidgetContext widgetContext)
   {
-    if (!widgetCreators.TryGetValue(widgetContext.DefinitionId, out var widgetCreator))
+    if (!_widgetCreators.TryGetValue(widgetContext.DefinitionId, out var widgetCreator))
     {
-      logger.LogError("Unknown widget: {widgetDefinitionId}", widgetContext.DefinitionId);
+      _logger.LogError("Unknown widget: {widgetDefinitionId}", widgetContext.DefinitionId);
       return;
     }
-    if (runningWidgets.ContainsKey(widgetContext.Id))
+
+    if (RunningWidgets.ContainsKey(widgetContext.Id))
     {
-      logger.LogWarning("Widget already running: {widgetDefinitionId} - {widgetId}", widgetContext.DefinitionId, widgetContext.Id);
+      _logger.LogWarning("Widget already running: {widgetDefinitionId} - {widgetId}", widgetContext.DefinitionId,
+        widgetContext.Id);
       return;
     }
+
     var widget = widgetCreator.CreateWidget(widgetContext);
-    logger.LogInformation("Widget created: {widgetDefinitionId} - {widgetId}", widgetContext.DefinitionId, widgetContext.Id);
-    runningWidgets.Add(widgetContext.Id, widget);
+    _logger.LogInformation("Widget created: {widgetDefinitionId} - {widgetId}", widgetContext.DefinitionId,
+      widgetContext.Id);
+    RunningWidgets.Add(widgetContext.Id, widget);
   }
+
   public void Activate(WidgetContext widgetContext)
   {
-    runningWidgets[widgetContext.Id].Activate();
-    logger.LogInformation("Widget activated: {definitionId} - {id}", widgetContext.DefinitionId, widgetContext.Id);
+    RunningWidgets[widgetContext.Id].Activate();
+    _logger.LogInformation("Widget activated: {definitionId} - {id}", widgetContext.DefinitionId, widgetContext.Id);
   }
+
   public void Deactivate(string widgetId)
   {
-    runningWidgets[widgetId].Deactivate();
-    logger.LogInformation("Widget deactivated: {widgetId}", widgetId);
+    RunningWidgets[widgetId].Deactivate();
+    _logger.LogInformation("Widget deactivated: {widgetId}", widgetId);
   }
-  public void DeleteWidget(string widgetId, string customState)
+
+  public void DeleteWidget(string widgetId, string _)
   {
-    runningWidgets[widgetId].DeleteWidget();
-    logger.LogInformation("Widget deleted: {widgetId}", widgetId);
-    if (runningWidgets.Count == 0)
+    RunningWidgets[widgetId].Dispose();
+    RunningWidgets.Remove(widgetId);
+    _logger.LogInformation("Widget deleted: {widgetId}", widgetId);
+    if (RunningWidgets.Count == 0)
     {
-      emptyWidgetEvent.Set();
-      logger.LogInformation("No more running widgets. Signaling empty widget event.");
+      EmptyWidgetEvent.Set();
+      _logger.LogInformation("No more running widgets. Signaling empty widget event.");
     }
   }
+
   public void OnActionInvoked(WidgetActionInvokedArgs args)
   {
-    runningWidgets[args.WidgetContext.Id].OnActionInvoked(args);
-    logger.LogInformation("Action invoked on widget: {widgetId} - {widgetDefinitionId}, action: {verb}", args.WidgetContext.Id, args.WidgetContext.DefinitionId, args.Verb);
+    RunningWidgets[args.WidgetContext.Id].OnActionInvoked(args);
+    _logger.LogInformation("Action invoked on widget: {widgetId} - {widgetDefinitionId}, action: {verb}",
+      args.WidgetContext.Id, args.WidgetContext.DefinitionId, args.Verb);
   }
+
   public void OnWidgetContextChanged(WidgetContextChangedArgs args)
   {
-    runningWidgets[args.WidgetContext.Id].OnWidgetContextChanged(args);
-    logger.LogInformation("Widget context changed: {widgetId} - {widgetDefinitionId}, size: {size}", args.WidgetContext.Id, args.WidgetContext.DefinitionId, args.WidgetContext.Size);
+    RunningWidgets[args.WidgetContext.Id].OnWidgetContextChanged(args);
+    _logger.LogInformation("Widget context changed: {widgetId} - {widgetDefinitionId}, size: {size}",
+      args.WidgetContext.Id, args.WidgetContext.DefinitionId, args.WidgetContext.Size);
   }
-  public static ManualResetEvent GetEmptyWidgetEvent() => emptyWidgetEvent;
+
+  public static ManualResetEvent GetEmptyWidgetEvent() => EmptyWidgetEvent;
 }

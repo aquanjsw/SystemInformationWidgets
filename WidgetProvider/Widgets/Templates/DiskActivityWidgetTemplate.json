@@ -8,68 +8,147 @@
       "columns": [
         {
           "type": "Column",
-          "width": "stretch",
           "items": [
             {
               "type": "TextBlock",
-              "text": "{{DiskActivityTemplate_Read}}",
+              "text": "{{DiskActivityTemplate_DiskTransferRate}}",
               "wrap": true,
-              "style": "heading",
               "isSubtle": true,
-              "size": "Default",
-              "weight": "Default"
+              "size": "Small",
+              "$when": "${$host.widgetSize==\"medium\"}"
             }
           ]
         },
         {
           "type": "Column",
-          "width": "stretch",
           "items": [
             {
               "type": "TextBlock",
-              "text": "{{DiskActivityTemplate_Write}}",
+              "text": "${UpperLimit}",
               "wrap": true,
-              "horizontalAlignment": "Right",
-              "style": "heading",
               "isSubtle": true,
-              "size": "Default",
-              "weight": "Default"
+              "size": "Small",
+              "horizontalAlignment": "Right",
+              "$when": "${$host.widgetSize==\"medium\"}"
             }
           ]
         }
       ]
     },
     {
+      "type": "Image",
+      "url": "${ChartUrl}",
+      "horizontalAlignment": "Center",
+      "$when": "${$host.widgetSize==\"medium\"}",
+      "spacing": "None"
+    },
+    {
       "type": "ColumnSet",
       "columns": [
         {
           "type": "Column",
-          "width": "stretch",
+          "width": "${LegendWidth}",
           "items": [
             {
-              "type": "TextBlock",
-              "text": "${readSpeed}",
-              "size": "Large",
-              "weight": "Bolder"
+              "type": "Image",
+              "url": "${WriteLegendUrl}",
+              "horizontalAlignment": "Left",
+              "spacing": "None"
+            }
+          ],
+          "verticalContentAlignment": "center",
+          "spacing": "None",
+          "$when": "${$host.widgetSize==\"medium\"}"
+        },
+        {
+          "type": "Column",
+          "width": "stretch",
+          "spacing": "none",
+          "items": [
+            {
+              "type": "ColumnSet",
+              "columns": [
+                {
+                  "type": "Column",
+                  "width": "stretch",
+                  "items": [
+                    {
+                      "type": "TextBlock",
+                      "text": "{{DiskActivityTemplate_Write}}",
+                      "style": "heading",
+                      "isSubtle": true,
+                      "size": "Default",
+                      "weight": "Default"
+                    }
+                  ]
+                },
+                {
+                  "type": "Column",
+                  "width": "stretch",
+                  "items": [
+                    {
+                      "type": "TextBlock",
+                      "text": "{{DiskActivityTemplate_Read}}",
+                      "horizontalAlignment": "Right",
+                      "style": "heading",
+                      "isSubtle": true,
+                      "size": "Default",
+                      "weight": "Default"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "ColumnSet",
+              "columns": [
+                {
+                  "type": "Column",
+                  "width": "stretch",
+                  "items": [
+                    {
+                      "type": "TextBlock",
+                      "text": "${WriteSpeed}",
+                      "size": "Large",
+                      "weight": "Bolder"
+                    }
+                  ]
+                },
+                {
+                  "type": "Column",
+                  "width": "stretch",
+                  "items": [
+                    {
+                      "type": "TextBlock",
+                      "text": "${ReadSpeed}",
+                      "horizontalAlignment": "Right",
+                      "size": "Large",
+                      "weight": "Bolder",
+                      "color": "Default"
+                    }
+                  ]
+                }
+              ]
             }
           ]
         },
         {
           "type": "Column",
-          "width": "stretch",
+          "width": "${LegendWidth}",
           "items": [
             {
-              "type": "TextBlock",
-              "text": "${writeSpeed}",
-              "wrap": true,
+              "type": "Image",
+              "url": "${ReadLegendUrl}",
               "horizontalAlignment": "Right",
-              "size": "Large",
-              "weight": "Bolder",
-              "color": "Default"
+              "spacing": "None"
             }
-          ]
+          ],
+          "verticalContentAlignment": "center",
+          "$when": "${$host.widgetSize==\"medium\"}",
+          "spacing": "none"
         }
-      ]
+      ],
+      "spacing": "small"
     }
   ]
 }

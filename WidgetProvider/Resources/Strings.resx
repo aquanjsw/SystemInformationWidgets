@@ -120,6 +120,9 @@
   <data name="DiskActivityTemplate_Read" xml:space="preserve">
     <value>Read</value>
   </data>
+  <data name="DiskActivityTemplate_DiskTransferRate" xml:space="preserve">
+    <value>Disk transfer rate</value>
+  </data>
   <data name="DiskActivityTemplate_Write" xml:space="preserve">
     <value>Write</value>
   </data>

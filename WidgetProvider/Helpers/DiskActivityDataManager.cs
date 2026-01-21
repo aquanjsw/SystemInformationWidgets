@@ -1,33 +1,41 @@
 ﻿using System.Diagnostics;
+using WidgetProvider.Helpers.Records;
 
 namespace WidgetProvider.Helpers;
 
-internal partial class DiskActivityDataManager : IDisposable
+internal sealed partial class DiskActivityDataManager : DataManagerBase<DiskActivityChart>
 {
-  private readonly PerformanceCounter readSpeedCounter;
-  private readonly PerformanceCounter writeSpeedCounter;
-  public DiskActivityDataManager()
+  public override Dictionary<string, string> GetData()
   {
-    readSpeedCounter = new PerformanceCounter("PhysicalDisk", "Disk Read Bytes/sec", "_Total");
-    writeSpeedCounter = new PerformanceCounter("PhysicalDisk", "Disk Write Bytes/sec", "_Total");
-  }
-  private static string GetSpeedString(float speed)
-  {
-    if (speed < 1024 * 1024)
+    var readKBps = _readBpsCounter.NextValue() / 1024;
+    var writeKBps = _writeBpsCounter.NextValue() / 1024;
+    var chartUrl = string.Empty;
+    var upperLimit = string.Empty;
+    if (IsChartEnabled)
     {
-      return $"{(speed / 1024):F0} KB/s";
+      Chart.AddSample(new DiskActivitySample(readKBps, writeKBps));
+      chartUrl = Chart.GetChartUrl();
+      upperLimit = Chart.CurrentUpperLimitString;
     }
-    else if (speed < 1024 * 1024 * 1024)
+
+    return new Dictionary<string, string>()
     {
-      return $"{(speed / (1024 * 1024)):F1} MB/s";
-    }
-    return $"{(speed / (1024 * 1024 * 1024)):F1} GB/s";
+      { "ReadSpeed", Chart.Value2String(readKBps) },
+      { "WriteSpeed", Chart.Value2String(writeKBps) },
+      { "ChartUrl", chartUrl },
+      { "UpperLimit", upperLimit },
+      { "ReadLegendUrl", Chart.ReadLegendUrl },
+      { "WriteLegendUrl", Chart.WriteLegendUrl },
+      { "LegendWidth", DiskActivityChart.LegendColumnWidth }
+    };
   }
-  public string GetReadSpeed() => GetSpeedString(readSpeedCounter.NextValue());
-  public string GetWriteSpeed() => GetSpeedString(writeSpeedCounter.NextValue());
-  public void Dispose()
+
+  protected override void DisposeManagedResources()
   {
-    readSpeedCounter.Dispose();
-    writeSpeedCounter.Dispose();
+    _readBpsCounter.Dispose();
+    _writeBpsCounter.Dispose();
   }
+
+  private readonly PerformanceCounter _readBpsCounter = new("PhysicalDisk", "Disk Read Bytes/sec", "_Total");
+  private readonly PerformanceCounter _writeBpsCounter = new("PhysicalDisk", "Disk Write Bytes/sec", "_Total");
 }

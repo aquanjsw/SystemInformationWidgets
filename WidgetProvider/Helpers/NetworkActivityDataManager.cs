@@ -1,62 +1,64 @@
-﻿using Microsoft.Extensions.Logging;
-using System.Diagnostics;
+﻿using System.Diagnostics;
+using Microsoft.Extensions.Logging;
 using WidgetProvider.Helpers.Records;
 
 namespace WidgetProvider.Helpers;
 
-internal partial class NetworkActivityDataManager : IDisposable
+internal sealed partial class NetworkActivityDataManager : DataManagerBase<NetworkActivityChart>
 {
-  private readonly List<PerformanceCounter> sentSpeedCounters = [];
-  private readonly List<PerformanceCounter> recvSpeedCounters = [];
-  private readonly ILogger logger = Providers.GetLoggerFactory().CreateLogger<NetworkActivityDataManager>();
-  private readonly NetworkActivityChart chart = new();
-  public bool IsChartEnabled { get; set; } = false;
-
   public NetworkActivityDataManager()
   {
-    var pcc = new PerformanceCounterCategory("Network Interface");
-    foreach (var name in pcc.GetInstanceNames())
+    var performanceCounterCategory = new PerformanceCounterCategory("Network Interface");
+    foreach (var name in performanceCounterCategory.GetInstanceNames())
     {
-      logger.LogInformation("Found network interface: {Name}", name);
-      sentSpeedCounters.Add(new PerformanceCounter("Network Interface", "Bytes Sent/sec", name));
-      recvSpeedCounters.Add(new PerformanceCounter("Network Interface", "Bytes Received/sec", name));
+      _logger.LogInformation("Found network interface: {Name}", name);
+      _sentSpeedCounters.Add(new PerformanceCounter("Network Interface", "Bytes Sent/sec", name));
+      _recvSpeedCounters.Add(new PerformanceCounter("Network Interface", "Bytes Received/sec", name));
     }
   }
 
-  private float GetSentSpeed() => sentSpeedCounters.Aggregate(0f, (acc, counter) => acc + counter.NextValue());
-  private float GetRecvSpeed() => recvSpeedCounters.Aggregate(0f, (acc, counter) => acc + counter.NextValue());
-
-  public Dictionary<string, string> GetData()
+  public override Dictionary<string, string> GetData()
   {
-    var sentKbps = GetSentSpeed() * 8 / 1024;
-    var recvKbps = GetRecvSpeed() * 8 / 1024;
+    var sentKbps = GetCurrentTotalSentKBps() * 8 / 1024;
+    var recvKbps = GetCurrentTotalRecvKBps() * 8 / 1024;
     var chartUrl = string.Empty;
     var upperLimit = string.Empty;
     if (IsChartEnabled)
     {
-      chart.AddSample(new NetworkActivitySample(sentKbps, recvKbps));
-      logger.LogDebug("Getting chart url");
-      chartUrl = chart.GetMainChartUrl();
-      upperLimit = chart.CurrentUpperLimitString;
+      Chart.AddSample(new NetworkActivitySample(sentKbps, recvKbps));
+      _logger.LogDebug("Getting chart url");
+      chartUrl = Chart.GetChartUrl();
+      upperLimit = Chart.CurrentUpperLimitString;
     }
 
     return new Dictionary<string, string>
     {
-      { "SentSpeed", NetworkActivityChart.Value2String(sentKbps) },
-      { "RecvSpeed", NetworkActivityChart.Value2String(recvKbps) },
+      { "SentSpeed", Chart.Value2String(sentKbps) },
+      { "RecvSpeed", Chart.Value2String(recvKbps) },
       { "ChartUrl", chartUrl },
       { "UpperLimit", upperLimit },
-      { "SentLegendUrl", NetworkActivityChart.SentLegendUrl },
-      { "RecvLegendUrl", NetworkActivityChart.RecvLegendUrl }
+      { "SentLegendUrl", Chart.SentLegendUrl },
+      { "RecvLegendUrl", Chart.RecvLegendUrl },
+      { "LegendWidth", NetworkActivityChart.LegendColumnWidth }
     };
   }
 
-  public void Dispose()
+  protected override void DisposeManagedResources()
   {
-    for (var i = 0; i < sentSpeedCounters.Count; i++)
+    for (var i = 0; i < _sentSpeedCounters.Count; i++)
     {
-      sentSpeedCounters[i].Dispose();
-      recvSpeedCounters[i].Dispose();
+      _sentSpeedCounters[i].Dispose();
+      _recvSpeedCounters[i].Dispose();
     }
   }
+
+  private float GetCurrentTotalSentKBps() =>
+    _sentSpeedCounters.Aggregate(0f, (acc, counter) => acc + counter.NextValue());
+
+  private float GetCurrentTotalRecvKBps() =>
+    _recvSpeedCounters.Aggregate(0f, (acc, counter) => acc + counter.NextValue());
+
+  private readonly List<PerformanceCounter> _sentSpeedCounters = [];
+  private readonly List<PerformanceCounter> _recvSpeedCounters = [];
+  private readonly ILogger _logger = Utils.LoggerFactory.CreateLogger<NetworkActivityDataManager>();
 }

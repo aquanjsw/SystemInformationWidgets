@@ -120,6 +120,9 @@
   <data name="DiskActivityTemplate_Read" xml:space="preserve">
     <value>读取</value>
   </data>
+  <data name="DiskActivityTemplate_DiskTransferRate" xml:space="preserve">
+    <value>磁盘传输速率</value>
+  </data>
   <data name="DiskActivityTemplate_Write" xml:space="preserve">
     <value>写入</value>
   </data>

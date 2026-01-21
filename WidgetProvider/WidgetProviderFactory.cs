@@ -1,5 +1,5 @@
-﻿using Microsoft.Windows.Widgets.Providers;
-using System.Runtime.InteropServices;
+﻿using System.Runtime.InteropServices;
+using Microsoft.Windows.Widgets.Providers;
 using WinRT;
 
 namespace COM;
@@ -13,18 +13,19 @@ static class Guids
 /// 
 /// IClassFactory declaration
 /// 
-[ComImport, ComVisible(false), InterfaceType(ComInterfaceType.InterfaceIsIUnknown), Guid(COM.Guids.IClassFactory)]
+[ComImport, ComVisible(false), InterfaceType(ComInterfaceType.InterfaceIsIUnknown), Guid(Guids.IClassFactory)]
 internal interface IClassFactory
 {
   [PreserveSig]
   int CreateInstance(IntPtr pUnkOuter, ref Guid riid, out IntPtr ppvObject);
+
   [PreserveSig]
   int LockServer(bool fLock);
 }
 
 [ComVisible(true)]
 class WidgetProviderFactory<T> : IClassFactory
-where T : IWidgetProvider, new()
+  where T : IWidgetProvider, new()
 {
   public int CreateInstance(IntPtr pUnkOuter, ref Guid riid, out IntPtr ppvObject)
   {
@@ -35,7 +36,7 @@ where T : IWidgetProvider, new()
       Marshal.ThrowExceptionForHR(CLASS_E_NOAGGREGATION);
     }
 
-    if (riid == typeof(T).GUID || riid == Guid.Parse(COM.Guids.IUnknown))
+    if (riid == typeof(T).GUID || riid == Guid.Parse(Guids.IUnknown))
     {
       // Create the instance of the .NET object
       ppvObject = MarshalInspectable<IWidgetProvider>.FromManaged(new T());
@@ -57,5 +58,4 @@ where T : IWidgetProvider, new()
 
   private const int CLASS_E_NOAGGREGATION = -2147221232;
   private const int E_NOINTERFACE = -2147467262;
-
 }
