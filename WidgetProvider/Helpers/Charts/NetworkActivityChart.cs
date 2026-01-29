@@ -1,27 +1,17 @@
 ﻿using System.Xml.Linq;
 using Microsoft.Extensions.Logging;
+using WidgetProvider.Helpers.Charts;
 using WidgetProvider.Helpers.Records;
 
 namespace WidgetProvider.Helpers;
 
-internal sealed class NetworkActivityChart : ChartBase<NetworkActivitySample>
+internal sealed class NetworkActivityChart : AbsoluteValuedChartBase<NetworkActivitySample>
 {
   public NetworkActivityChart()
   {
     _recvLegendUrl = CreateSolidLegendUrl();
     _sentLegendUrl = CreateDashedLegendUrl();
   }
-
-  /// <summary>
-  /// Convert Kbps value to [KMG]bps string.
-  /// </summary>
-  public override string Value2String(float value) =>
-    value switch
-    {
-      < 1024 => $"{value:F0} Kbps",
-      < 1024 * 1024 => $"{value / 1024:F0} Mbps",
-      _ => $"{value / (1024 * 1024):F1} Gbps",
-    };
 
   public string RecvLegendUrl => _recvLegendUrl;
   public string SentLegendUrl => _sentLegendUrl;
@@ -35,23 +25,10 @@ internal sealed class NetworkActivityChart : ChartBase<NetworkActivitySample>
     var ret = new XElement(Ns + "svg",
       new XAttribute("height", ChartHeight),
       new XAttribute("width", ChartWidth),
-      new XElement(Ns + "polyline",
-        new XAttribute("points", recvFillPoints),
-        new XAttribute("style", $"fill:{MainColor};fill-opacity:0.3;stroke:transparent")
-      ),
-      new XElement(Ns + "polyline",
-        new XAttribute("points", recvLinePoints),
-        new XAttribute("style", $"fill:none;stroke:{MainColor};stroke-width:1")
-      ),
-      new XElement(Ns + "polyline",
-        new XAttribute("points", sentLinePoints),
-        new XAttribute("style", $"fill:none;stroke:{MainColor};stroke-width:1;stroke-dasharray:2 1")
-      ),
-      new XElement(Ns + "rect",
-        new XAttribute("height", ChartHeight),
-        new XAttribute("width", ChartWidth),
-        new XAttribute("style", "fill:none;stroke:rgb(106, 106, 106);stroke-width:1")
-      )
+  CreateFillPointsElement(recvFillPoints),
+      CreateLinePointsElement(recvLinePoints),
+      CreateLinePointsElement(sentLinePoints),
+      ChartBorder
     ).ToString();
     return ret;
   }
@@ -61,7 +38,7 @@ internal sealed class NetworkActivityChart : ChartBase<NetworkActivitySample>
       SentKbps: s.SentKbps / CurrentUpperLimitValue,
       RecvKbps: s.RecvKbps / CurrentUpperLimitValue)).ToArray();
 
-  protected override string MainColor => "#BF174F";
+  protected override string MainColor => "#db396f";
   protected override ILogger Logger => _logger;
   protected override Dictionary<string, int> UpperLimits => SUpperLimits;
 

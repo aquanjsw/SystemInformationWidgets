@@ -1,4 +1,4 @@
-namespace WidgetProvider.Helpers;
+namespace WidgetProvider.Helpers.DataManagers;
 
 public abstract class DataManagerBase<T> : IDataManager where T : new()
 {

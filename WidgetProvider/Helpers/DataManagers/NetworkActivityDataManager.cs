@@ -2,7 +2,7 @@
 using Microsoft.Extensions.Logging;
 using WidgetProvider.Helpers.Records;
 
-namespace WidgetProvider.Helpers;
+namespace WidgetProvider.Helpers.DataManagers;
 
 internal sealed partial class NetworkActivityDataManager : DataManagerBase<NetworkActivityChart>
 {
@@ -33,8 +33,8 @@ internal sealed partial class NetworkActivityDataManager : DataManagerBase<Netwo
 
     return new Dictionary<string, string>
     {
-      { "SentSpeed", Chart.Value2String(sentKbps) },
-      { "RecvSpeed", Chart.Value2String(recvKbps) },
+      { "SentSpeed", Value2String(sentKbps) },
+      { "RecvSpeed", Value2String(recvKbps) },
       { "ChartUrl", chartUrl },
       { "UpperLimit", upperLimit },
       { "SentLegendUrl", Chart.SentLegendUrl },
@@ -51,6 +51,17 @@ internal sealed partial class NetworkActivityDataManager : DataManagerBase<Netwo
       _recvSpeedCounters[i].Dispose();
     }
   }
+
+  /// <summary>
+  /// Convert Kbps value to [KMG]bps string.
+  /// </summary>
+  private static string Value2String(float value) =>
+    value switch
+    {
+      < 1024 => $"{value:F0} Kbps",
+      < 1024 * 1024 => $"{value / 1024:F0} Mbps",
+      _ => $"{value / (1024 * 1024):F1} Gbps",
+    };
 
   private float GetCurrentTotalSentKBps() =>
     _sentSpeedCounters.Aggregate(0f, (acc, counter) => acc + counter.NextValue());

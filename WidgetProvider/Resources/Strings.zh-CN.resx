@@ -117,13 +117,13 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="DiskActivityTemplate_Read" xml:space="preserve">
+  <data name="DiskRwActivityTemplate_Read" xml:space="preserve">
     <value>读取</value>
   </data>
-  <data name="DiskActivityTemplate_DiskTransferRate" xml:space="preserve">
-    <value>磁盘传输速率</value>
+  <data name="DiskRwActivityTemplate_DiskTransferRate" xml:space="preserve">
+    <value>硬盘传输速率</value>
   </data>
-  <data name="DiskActivityTemplate_Write" xml:space="preserve">
+  <data name="DiskRwActivityTemplate_Write" xml:space="preserve">
     <value>写入</value>
   </data>
   <data name="NetworkActivityTemplate_Recv" xml:space="preserve">
@@ -134,5 +134,11 @@
   </data>
   <data name="NetworkActivityTemplate_Throughput" xml:space="preserve">
     <value>吞吐量</value>
+  </data>
+  <data name="DiskTimeActivityTemplate_ActiveTime" xml:space="preserve">
+    <value>活动时间</value>
+  </data>
+  <data name="DiskTimeActivityTemplate_AvgTransferTime" xml:space="preserve">
+    <value>平均传输时间</value>
   </data>
 </root>

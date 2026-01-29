@@ -2,53 +2,22 @@ using System.Text;
 using System.Xml.Linq;
 using Microsoft.Extensions.Logging;
 
-namespace WidgetProvider.Helpers;
+namespace WidgetProvider.Helpers.Charts;
 
 public abstract class ChartBase<T>
 {
-  public abstract string Value2String(float value);
-  public string CurrentUpperLimitString => UpperLimits.Keys.ElementAt(_currentUpperLimitIndex);
   public string GetChartUrl() => CreateChartUrl(CreateChart());
 
   public void AddSample(T sample)
   {
-    lock (_samplesLock)
+    lock (SamplesLock)
     {
-      _samples.RemoveAt(0);
-      _samples.Add(sample);
+      Samples.RemoveAt(0);
+      Samples.Add(sample);
     }
   }
 
   public const string LegendColumnWidth = "7px";
-
-  protected T[] GetNormalizedSamples()
-  {
-    T[] samplesCopy;
-    lock (_samplesLock)
-    {
-      samplesCopy = _samples.ToArray();
-    }
-
-    var max = GetMaxValue(samplesCopy);
-    var currentUpperLimit = UpperLimits.Values.ElementAt(_currentUpperLimitIndex);
-    if (max > currentUpperLimit)
-    {
-      if (_currentUpperLimitIndex < UpperLimits.Count - 1)
-      {
-        _currentUpperLimitIndex++;
-        Logger.LogInformation("Increased upper limit to {UpperLimit}",
-          CurrentUpperLimitString);
-      }
-    }
-    else if (_currentUpperLimitIndex != 0 && max < UpperLimits.Values.ElementAt(_currentUpperLimitIndex - 1))
-    {
-      _currentUpperLimitIndex--;
-      Logger.LogInformation("Decreased upper limit to {UpperLimit}",
-        CurrentUpperLimitString);
-    }
-
-    return NormalizeSamples(samplesCopy);
-  }
 
   protected string CreateSolidLegendUrl() => CreateChartUrl(new XElement(Ns + "svg",
     new XAttribute("height", LegendHeight),
@@ -66,18 +35,32 @@ public abstract class ChartBase<T>
       new XAttribute("style", $"fill:none;stroke:{MainColor};stroke-width:{LegendStrokeWidth};stroke-dasharray:2 2"))
   ).ToString());
 
+  protected XElement CreateLinePointsElement(string points) => new XElement(Ns + "polyline",
+    new XAttribute("points", points),
+    new XAttribute("style", $"fill:none;stroke:{MainColor};stroke-width:1")
+  );
+  
+  protected XElement CreateFillPointsElement(string points) => new XElement(Ns + "polyline",
+    new XAttribute("points", points),
+    new XAttribute("style", $"fill:{MainColor};fill-opacity:0.3;stroke:transparent")
+  );
+
   protected abstract string CreateChart();
-  protected abstract float GetMaxValue(T[] samples);
-  protected abstract T[] NormalizeSamples(T[] samples);
-  protected abstract Dictionary<string, int> UpperLimits { get; }
   protected abstract ILogger Logger { get; }
   protected abstract string MainColor { get; }
-  protected int CurrentUpperLimitValue => UpperLimits.Values.ElementAt(_currentUpperLimitIndex);
   protected const int Capacity = 34;
   protected const int ChartWidth = 268;
-  protected const int ChartHeight = 150;
+  protected const int ChartHeight = 160;
   protected static readonly XNamespace Ns = "http://www.w3.org/2000/svg";
   protected static readonly int[] XCoords = ComputeXCoords();
+  protected readonly Lock SamplesLock = new();
+  protected readonly List<T> Samples = [.. new T[Capacity]];
+
+  protected static readonly XElement ChartBorder = new XElement(Ns + "rect",
+    new XAttribute("height", ChartHeight),
+    new XAttribute("width", ChartWidth),
+    new XAttribute("style", "fill:none;stroke:rgb(106, 106, 106);stroke-width:1")
+  );
 
   private static int[] ComputeXCoords()
   {
@@ -113,9 +96,6 @@ public abstract class ChartBase<T>
     "data:image/svg+xml;base64," + Convert.ToBase64String(Encoding.UTF8.GetBytes(svg));
 
   private const int LegendStrokeWidth = 3;
-  private const int LegendHeight = 55;
+  private const int LegendHeight = 45;
   private const int LegendWidth = 2;
-  private int _currentUpperLimitIndex;
-  private readonly Lock _samplesLock = new();
-  private readonly List<T> _samples = [.. new T[Capacity]];
 }

@@ -12,4 +12,4 @@ Windows11 widgets for displaying system activity information:
   
   Monitoring disk read and write speed.
 
-  ![Disk Activity Widget](WidgetProviderPackage/ProviderAssets/DiskActivityWidgetScreenshot.language-en-US.png)
+  ![Disk Activity Widget](WidgetProviderPackage/ProviderAssets/DiskRwActivityWidgetScreenshot.language-en-US.png)

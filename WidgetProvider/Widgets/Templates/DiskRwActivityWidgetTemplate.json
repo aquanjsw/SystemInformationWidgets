@@ -11,7 +11,7 @@
           "items": [
             {
               "type": "TextBlock",
-              "text": "{{DiskActivityTemplate_DiskTransferRate}}",
+              "text": "{{DiskRwActivityTemplate_DiskTransferRate}}",
               "wrap": true,
               "isSubtle": true,
               "size": "Small",
@@ -74,7 +74,7 @@
                   "items": [
                     {
                       "type": "TextBlock",
-                      "text": "{{DiskActivityTemplate_Write}}",
+                      "text": "{{DiskRwActivityTemplate_Write}}",
                       "style": "heading",
                       "isSubtle": true,
                       "size": "Default",
@@ -88,7 +88,7 @@
                   "items": [
                     {
                       "type": "TextBlock",
-                      "text": "{{DiskActivityTemplate_Read}}",
+                      "text": "{{DiskRwActivityTemplate_Read}}",
                       "horizontalAlignment": "Right",
                       "style": "heading",
                       "isSubtle": true,
@@ -128,7 +128,8 @@
                     }
                   ]
                 }
-              ]
+              ],
+              "spacing": "none"
             }
           ]
         },

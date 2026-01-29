@@ -129,13 +129,19 @@
   <data name="PackageManifest_NetworkActivity_Description" xml:space="preserve">
     <value>监视网络发送与接收活动</value>
   </data>
-  <data name="PackageManifest_DiskActivity_DisplayName" xml:space="preserve">
-    <value>硬盘活动</value>
+  <data name="PackageManifest_DiskRwActivity_DisplayName" xml:space="preserve">
+    <value>硬盘读写活动</value>
   </data>
-  <data name="PackageManifest_DiskActivity_Description" xml:space="preserve">
+  <data name="PackageManifest_DiskRwActivity_Description" xml:space="preserve">
     <value>监视硬盘读取与写入活动</value>
   </data>
   <data name="PackageManifest_Widget_DisplayName" xml:space="preserve">
     <value>系统活动</value>
+  </data>
+  <data name="PackageManifest_DiskTimeActivity_Description" xml:space="preserve">
+    <value>监视硬盘时间与平均传输时间</value>
+  </data>
+  <data name="PackageManifest_DiskTimeActivity_DisplayName" xml:space="preserve">
+    <value>硬盘时间活动</value>
   </data>
 </root>

@@ -2,35 +2,24 @@ using System.Xml.Linq;
 using Microsoft.Extensions.Logging;
 using WidgetProvider.Helpers.Records;
 
-namespace WidgetProvider.Helpers;
+namespace WidgetProvider.Helpers.Charts;
 
-internal sealed class DiskActivityChart : ChartBase<DiskActivitySample>
+internal sealed class DiskRwActivityChart : AbsoluteValuedChartBase<DiskRwActivitySample>
 {
-  public DiskActivityChart()
+  public DiskRwActivityChart()
   {
     _readLegendUrl = CreateSolidLegendUrl();
     _writeLegendUrl = CreateDashedLegendUrl();
   }
 
-  /// <summary>
-  /// Convert KB/s value to [KMG]B/s string.
-  /// </summary>
-  public override string Value2String(float value) =>
-    value switch
-    {
-      < 1024 => $"{value:F0} KB/s",
-      < 1024 * 1024 => $"{value / 1024:F0} MB/s",
-      _ => $"{value / (1024 * 1024):F1} GB/s",
-    };
-
   public string ReadLegendUrl => _readLegendUrl;
   public string WriteLegendUrl => _writeLegendUrl;
 
-  protected override float GetMaxValue(DiskActivitySample[] samples) =>
+  protected override float GetMaxValue(DiskRwActivitySample[] samples) =>
     samples.Select(s => Math.Max(s.ReadKBps, s.WriteKBps)).Max();
 
-  protected override DiskActivitySample[] NormalizeSamples(DiskActivitySample[] samples) =>
-    samples.Select(s => new DiskActivitySample(
+  protected override DiskRwActivitySample[] NormalizeSamples(DiskRwActivitySample[] samples) =>
+    samples.Select(s => new DiskRwActivitySample(
       ReadKBps: s.ReadKBps / CurrentUpperLimitValue,
       WriteKBps: s.WriteKBps / CurrentUpperLimitValue
     )).ToArray();
@@ -41,23 +30,10 @@ internal sealed class DiskActivityChart : ChartBase<DiskActivitySample>
     return new XElement(Ns + "svg",
       new XAttribute("height", ChartHeight),
       new XAttribute("width", ChartWidth),
-      new XElement(Ns + "polyline",
-        new XAttribute("points", readFillPoints),
-        new XAttribute("style", $"fill:{MainColor};fill-opacity:0.3;stroke:transparent")
-      ),
-      new XElement(Ns + "polyline",
-        new XAttribute("points", readLinePoints),
-        new XAttribute("style", $"fill:none;stroke:{MainColor};stroke-width:1")
-      ),
-      new XElement(Ns + "polyline",
-        new XAttribute("points", writeLinePoints),
-        new XAttribute("style", $"fill:none;stroke:{MainColor};stroke-width:1;stroke-dasharray:2 1")
-      ),
-      new XElement(Ns + "rect",
-        new XAttribute("height", ChartHeight),
-        new XAttribute("width", ChartWidth),
-        new XAttribute("style", "fill:none;stroke:rgb(106, 106, 106);stroke-width:1")
-      )
+      CreateFillPointsElement(readFillPoints),
+      CreateLinePointsElement(readLinePoints),
+      CreateLinePointsElement(writeLinePoints),
+      ChartBorder
     ).ToString();
   }
 
@@ -94,7 +70,7 @@ internal sealed class DiskActivityChart : ChartBase<DiskActivitySample>
     { "10 GB/s", 5 * 1024 * 1024 }
   };
 
-  private readonly ILogger _logger = Utils.LoggerFactory.CreateLogger<DiskActivityChart>();
+  private readonly ILogger _logger = Utils.LoggerFactory.CreateLogger<DiskRwActivityChart>();
   private readonly string _readLegendUrl;
   private readonly string _writeLegendUrl;
 }

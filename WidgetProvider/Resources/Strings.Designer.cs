@@ -63,27 +63,45 @@ namespace WidgetProvider.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Disk transfer rate.
         /// </summary>
-        internal static string DiskActivityTemplate_DiskTransferRate {
+        internal static string DiskRwActivityTemplate_DiskTransferRate {
             get {
-                return ResourceManager.GetString("DiskActivityTemplate_DiskTransferRate", resourceCulture);
+                return ResourceManager.GetString("DiskRwActivityTemplate_DiskTransferRate", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Read.
         /// </summary>
-        internal static string DiskActivityTemplate_Read {
+        internal static string DiskRwActivityTemplate_Read {
             get {
-                return ResourceManager.GetString("DiskActivityTemplate_Read", resourceCulture);
+                return ResourceManager.GetString("DiskRwActivityTemplate_Read", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Write.
         /// </summary>
-        internal static string DiskActivityTemplate_Write {
+        internal static string DiskRwActivityTemplate_Write {
             get {
-                return ResourceManager.GetString("DiskActivityTemplate_Write", resourceCulture);
+                return ResourceManager.GetString("DiskRwActivityTemplate_Write", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Active Time.
+        /// </summary>
+        internal static string DiskTimeActivityTemplate_ActiveTime {
+            get {
+                return ResourceManager.GetString("DiskTimeActivityTemplate_ActiveTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Average transfer time.
+        /// </summary>
+        internal static string DiskTimeActivityTemplate_AvgTransferTime {
+            get {
+                return ResourceManager.GetString("DiskTimeActivityTemplate_AvgTransferTime", resourceCulture);
             }
         }
         

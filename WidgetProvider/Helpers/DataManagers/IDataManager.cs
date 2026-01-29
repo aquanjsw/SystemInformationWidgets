@@ -1,4 +1,4 @@
-namespace WidgetProvider.Helpers;
+namespace WidgetProvider.Helpers.DataManagers;
 
 public interface IDataManager : IDisposable
 {

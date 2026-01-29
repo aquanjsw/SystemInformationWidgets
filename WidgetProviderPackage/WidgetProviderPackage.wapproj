@@ -159,11 +159,11 @@
     <Content Include="Images\Wide310x150Logo.scale-150.png" />
     <Content Include="Images\Wide310x150Logo.scale-200.png" />
     <Content Include="Images\Wide310x150Logo.scale-400.png" />
-    <Content Include="ProviderAssets\DiskActivityWidgetIcon.png" />
-    <Content Include="ProviderAssets\DiskActivityWidgetScreenshot.language-en-US.png" />
-    <Content Include="ProviderAssets\DiskActivityWidgetScreenshot.language-zh-CN.png" />
-    <Content Include="ProviderAssets\DiskActivityWidgetScreenshot_Dark.language-en-US.png" />
-    <Content Include="ProviderAssets\DiskActivityWidgetScreenshot_Dark.language-zh-CN.png" />
+    <Content Include="ProviderAssets\DiskRwActivityWidgetIcon.png" />
+    <Content Include="ProviderAssets\DiskRwActivityWidgetScreenshot.language-en-US.png" />
+    <Content Include="ProviderAssets\DiskRwActivityWidgetScreenshot.language-zh-CN.png" />
+    <Content Include="ProviderAssets\DiskRwActivityWidgetScreenshot_Dark.language-en-US.png" />
+    <Content Include="ProviderAssets\DiskRwActivityWidgetScreenshot_Dark.language-zh-CN.png" />
     <Content Include="ProviderAssets\NetworkActivityWidgetScreenshot.language-en-US.png" />
     <Content Include="ProviderAssets\NetworkActivityWidgetScreenshot.language-zh-CN.png" />
     <Content Include="ProviderAssets\NetworkActivityWidgetScreenshot_Dark.language-en-US.png" />

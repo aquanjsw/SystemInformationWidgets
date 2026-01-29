@@ -117,13 +117,13 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="DiskActivityTemplate_Read" xml:space="preserve">
+  <data name="DiskRwActivityTemplate_Read" xml:space="preserve">
     <value>Read</value>
   </data>
-  <data name="DiskActivityTemplate_DiskTransferRate" xml:space="preserve">
+  <data name="DiskRwActivityTemplate_DiskTransferRate" xml:space="preserve">
     <value>Disk transfer rate</value>
   </data>
-  <data name="DiskActivityTemplate_Write" xml:space="preserve">
+  <data name="DiskRwActivityTemplate_Write" xml:space="preserve">
     <value>Write</value>
   </data>
   <data name="NetworkActivityTemplate_Recv" xml:space="preserve">
@@ -134,5 +134,11 @@
   </data>
   <data name="NetworkActivityTemplate_Throughput" xml:space="preserve">
     <value>Thoughput</value>
+  </data>
+  <data name="DiskTimeActivityTemplate_ActiveTime" xml:space="preserve">
+    <value>Active Time</value>
+  </data>
+  <data name="DiskTimeActivityTemplate_AvgTransferTime" xml:space="preserve">
+    <value>Average transfer time</value>
   </data>
 </root>

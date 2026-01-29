@@ -28,7 +28,8 @@ internal partial class WidgetProvider : IWidgetProvider, IDisposable
     _logger = Utils.LoggerFactory.CreateLogger<WidgetProvider>();
 
     _widgetCreators.Add("NetworkActivity", new WidgetFactory<NetworkActivityWidget>());
-    _widgetCreators.Add("DiskActivity", new WidgetFactory<DiskActivityWidget>());
+    _widgetCreators.Add("DiskRwActivity", new WidgetFactory<DiskRwActivityWidget>());
+    _widgetCreators.Add("DiskTimeActivity", new WidgetFactory<DiskTimeActivityWidget>());
 
     foreach (var widgetInfo in WidgetManager.GetDefault().GetWidgetInfos())
     {

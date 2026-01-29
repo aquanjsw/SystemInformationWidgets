@@ -13,7 +13,6 @@
 
   <ItemGroup>
     <None Remove="appsettings_Development.json" />
-    <None Remove="Widgets\Templates\DiskActivityWidgetTemplate.json" />
     <None Remove="Widgets\Templates\NetworkActivityWidgetTemplate.json" />
   </ItemGroup>
 
@@ -24,10 +23,17 @@
     <Content Include="appsettings_Development.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Widgets\Templates\DiskActivityWidgetTemplate.json">
+    <Content Include="Widgets\Templates\DiskRwActivityWidgetTemplate.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Widgets\Templates\NetworkActivityWidgetTemplate.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Update="Widgets\Templates\DiskTimeActivityWidgetTemplate.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <None Remove="Widgets\Templates\DiskTimeActivityWidgetTemplate.json" />
+    <Content Include="Widgets\Templates\DiskTimeActivityWidgetTemplate.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

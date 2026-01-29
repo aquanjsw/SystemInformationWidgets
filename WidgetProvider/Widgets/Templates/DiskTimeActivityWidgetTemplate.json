@@ -1,0 +1,112 @@
+﻿{
+  "type": "AdaptiveCard",
+  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+  "version": "1.6",
+  "body": [
+    {
+      "type": "ColumnSet",
+      "columns": [
+        {
+          "type": "Column",
+          "items": [
+            {
+              "type": "TextBlock",
+              "text": "{{DiskTimeActivityTemplate_ActiveTime}}",
+              "wrap": true,
+              "isSubtle": true,
+              "size": "Small",
+              "$when": "${$host.widgetSize==\"medium\"}"
+            }
+          ]
+        },
+        {
+          "type": "Column",
+          "items": [
+            {
+              "type": "TextBlock",
+              "text": "100%",
+              "wrap": true,
+              "isSubtle": true,
+              "size": "Small",
+              "horizontalAlignment": "Right",
+              "$when": "${$host.widgetSize==\"medium\"}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "Image",
+      "url": "${ChartUrl}",
+      "horizontalAlignment": "Center",
+      "$when": "${$host.widgetSize==\"medium\"}",
+      "spacing": "None"
+    },
+    {
+      "type": "ColumnSet",
+      "columns": [
+        {
+          "type": "Column",
+          "width": "stretch",
+          "items": [
+            {
+              "type": "TextBlock",
+              "text": "{{DiskTimeActivityTemplate_ActiveTime}}",
+              "style": "heading",
+              "isSubtle": true,
+              "size": "Default",
+              "weight": "Default"
+            }
+          ]
+        },
+        {
+          "type": "Column",
+          "width": "stretch",
+          "items": [
+            {
+              "type": "TextBlock",
+              "text": "{{DiskTimeActivityTemplate_AvgTransferTime}}",
+              "horizontalAlignment": "Right",
+              "style": "heading",
+              "isSubtle": true,
+              "size": "Default",
+              "weight": "Default"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "ColumnSet",
+      "columns": [
+        {
+          "type": "Column",
+          "width": "stretch",
+          "items": [
+            {
+              "type": "TextBlock",
+              "text": "${ActiveTime}",
+              "size": "Large",
+              "weight": "Bolder"
+            }
+          ]
+        },
+        {
+          "type": "Column",
+          "width": "stretch",
+          "items": [
+            {
+              "type": "TextBlock",
+              "text": "${AvgTransferTime}",
+              "horizontalAlignment": "Right",
+              "size": "Large",
+              "weight": "Bolder",
+              "color": "Default"
+            }
+          ]
+        }
+      ],
+      "spacing": "none"
+    }
+  ]
+}

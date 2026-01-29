@@ -4,11 +4,12 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Windows.Widgets;
 using Microsoft.Windows.Widgets.Providers;
 using WidgetProvider.Helpers;
+using WidgetProvider.Helpers.DataManagers;
 using Timer = System.Timers.Timer;
 
 namespace WidgetProvider.Widgets;
 
-internal abstract class WidgetBase : IWidget
+public abstract class WidgetBase : IWidget
 {
   public virtual void Activate()
   {
